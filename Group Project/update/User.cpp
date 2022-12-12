@@ -1,4 +1,5 @@
 #include "User.h"
+#include "Utils.h"
 
 User::User() {}
 
@@ -127,32 +128,6 @@ void showUserHeaderIncludeHouse()
     cout << endl;
 }
 
-void showHouseInfoHeader()
-{
-    cout << "-------------------- House's info --------------------" << endl;
-    cout.width(HOUSE_LOCATION);
-    cout << left << "Location";
-    cout.width(HOUSE_DESCRIPTION);
-    cout << left << "Description";
-    cout << endl;
-}
-
-bool caseInsensitiveStringCompare(const string& str1, const string& str2)
-{
-    if (str1.size() != str2.size())
-    {
-        return false;
-    }
-
-    for (string::const_iterator c1 = str1.begin(), c2 = str2.begin(); c1 != str1.end(); ++c1, ++c2)
-    {
-        if (tolower(static_cast<unsigned char>(*c1)) != tolower(static_cast<unsigned char>(*c2)))
-        {
-            return false;
-        }
-    }
-    return true;
-}
 
 // Show info function
 void showUsersInfo(vector<User*> users, bool includeHouse)
@@ -169,15 +144,6 @@ void showUsersInfo(vector<User*> users, bool includeHouse)
     for (int i = 0; i < users.size(); i++)
     {
         users[i]->showInfo();
-    }
-}
-
-void showHouseInfo(vector<House*> houses)
-{
-    showHouseInfoHeader();
-    for (int i = 0; i < houses.size(); i++)
-    {
-        houses[i]->showInfo();
     }
 }
 
@@ -261,17 +227,4 @@ bool validatePhoneNumberOfUser(vector<User*> users, string phoneNumber)
     }
 
     return check;
-}
-
-// Check house location function
-bool validateHouseInput(House house)
-{
-    for (int i = 0; i < defaultLocations.size(); i++)
-    {
-        if (caseInsensitiveStringCompare(defaultLocations[i], house.getLocation()))
-        {
-            return true;
-        }
-    }
-    return false;
 }

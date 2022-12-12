@@ -22,3 +22,10 @@ public:
 
     void showInfo();
 };
+
+void showHouseInfoHeader();
+
+void showHouseInfo(vector<House*> houses);
+
+// Check house location function
+bool validateHouseInput(House house);
