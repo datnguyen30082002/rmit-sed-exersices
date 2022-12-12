@@ -1,43 +1,58 @@
 #include "House.h"
 #include "Utils.h"
 
-House::House() {};
+House::House(){};
 
-House::House(string location, string description)
+House::House(string location, string description, bool status)
 {
-	this->location = location;
-	this->description = description;
+    this->location = location;
+    this->description = description;
+    this->status = status;
 }
 
 void House::setLocation(string location)
 {
-	this->location = location;
+    this->location = location;
 }
 
 string House::getLocation()
 {
-	return location;
+    return location;
 }
 
 void House::setDescription(string description)
 {
-	this->description = description;
+    this->description = description;
 }
 
 string House::getDescription()
 {
-	return description;
+    return description;
+}
+
+void House::setUser(User user)
+{
+    this->user = user;
+}
+
+void House::setStatus(bool status)
+{
+    this->status = status;
+}
+
+bool House::getStatus()
+{
+    return status;
 }
 
 void House::showInfo()
 {
-	cout.width(HOUSE_LOCATION);
-	cout << left << location;
-	cout.width(HOUSE_DESCRIPTION);
-	cout << left << description;
+    cout.width(HOUSE_LOCATION);
+    cout << left << location;
+    cout.width(HOUSE_DESCRIPTION);
+    cout << left << description;
     cout << endl;
 }
-
 
 void showHouseInfoHeader()
 {

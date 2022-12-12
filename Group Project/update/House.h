@@ -1,16 +1,19 @@
 #pragma once
 #include "Header.h"
+#include "User.h"
 
 class House
 {
 private:
     string location;
     string description;
+    User user;
+    bool status;
 
 public:
     House();
 
-    House(string location, string description);
+    House(string location, string description, bool show);
    
     void setLocation(string location);
    
@@ -19,6 +22,12 @@ public:
     void setDescription(string description);
     
     string getDescription();
+
+    void setUser(User user);
+
+    void setStatus(bool status);
+
+    bool getStatus();
 
     void showInfo();
 };

@@ -92,7 +92,7 @@ void User::showInfo()
     cout.width(USER_CREDIT_POINT_WIDTH);
     cout << left << credit_point;
     house.showInfo();
-    cout << endl;
+    //cout << endl;
 }
 
 // Format user output
