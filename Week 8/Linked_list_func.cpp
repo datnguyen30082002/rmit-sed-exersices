@@ -7,16 +7,16 @@ class Household
 {
 public:
     string name;
-    Household* next = nullptr; // Declare next pointer
+    Household *next = nullptr; // Declare next pointer
 
     Household(string name = "") : name(name) {}
 };
 
 // Traversal function
-void traversal(Household* oriHousehold)
+void traversal(Household *oriHousehold)
 {
     // Show linked list
-    Household* tmp = oriHousehold;
+    Household *tmp = oriHousehold;
 
     while (tmp != nullptr)
     {
@@ -29,29 +29,29 @@ void traversal(Household* oriHousehold)
 }
 
 // Search by name function
-Household findByName(Household* oriHousehold, string name)
+Household *findByName(Household *oriHousehold, string name)
 {
     if (oriHousehold == nullptr)
     {
         cout << "\n List is empty";
-        return Household("");
+        return new Household("");
     }
 
-    Household* tmp = oriHousehold;
+    Household *tmp = oriHousehold;
 
     while (tmp != nullptr)
     {
         if (tmp->name.compare(name) == 0)
-            return *tmp;
+            return tmp;
 
         tmp = tmp->next;
     }
 
-    return Household("");
+    return new Household("");
 }
 
 // Search by index function
-Household findByIndex(Household* oriHousehold, int index)
+Household findByIndex(Household *oriHousehold, int index)
 {
     if (oriHousehold == nullptr)
     {
@@ -59,7 +59,7 @@ Household findByIndex(Household* oriHousehold, int index)
         return Household("");
     }
 
-    Household* tmp = oriHousehold;
+    Household *tmp = oriHousehold;
     int position = 0;
 
     while (tmp != nullptr)
@@ -74,7 +74,8 @@ Household findByIndex(Household* oriHousehold, int index)
     return Household("");
 }
 
-Household *findLastNode(Household* oriHousehold)
+// Find last node function
+Household *findLastNode(Household *oriHousehold)
 {
     if (oriHousehold == nullptr)
     {
@@ -82,7 +83,7 @@ Household *findLastNode(Household* oriHousehold)
         return new Household("");
     }
 
-    Household* tmp = oriHousehold;
+    Household *tmp = oriHousehold;
 
     while (tmp->next != nullptr)
     {
@@ -92,7 +93,47 @@ Household *findLastNode(Household* oriHousehold)
     return tmp;
 }
 
-void addElementAtEnd(Household* oriHousehold, Household node2)
+// Find the penultimate node function
+Household *findPenultimateNode(Household *oriHousehold)
+{
+    if (oriHousehold == nullptr)
+    {
+        cout << "\n List is empty";
+        return new Household("");
+    }
+
+    Household *tmp = oriHousehold;
+
+    while (tmp->next->next != nullptr)
+    {
+        tmp = tmp->next;
+    }
+
+    return tmp;
+}
+
+/*Add node function*/
+// Add element at the begin
+void addElementAtBegin(Household *oriHousehold, Household node1)
+{
+    node1.next = oriHousehold;
+    oriHousehold = &node1;
+
+    // Show linked list
+    Household *tmp = oriHousehold;
+
+    while (tmp != nullptr)
+    {
+        cout << tmp->name;
+        tmp = tmp->next;
+
+        if (tmp != nullptr)
+            cout << " ---> ";
+    }
+}
+
+// Add element at the end
+void addElementAtEnd(Household *oriHousehold, Household node2)
 {
     // Find last node
     Household *lastNode = findLastNode(oriHousehold);
@@ -102,7 +143,7 @@ void addElementAtEnd(Household* oriHousehold, Household node2)
     node2.next = nullptr;
 
     // Show linked list
-    Household* tmp = oriHousehold;
+    Household *tmp = oriHousehold;
 
     // Print linked list
     while (tmp != nullptr)
@@ -115,16 +156,42 @@ void addElementAtEnd(Household* oriHousehold, Household node2)
     }
 }
 
-/*Add node function*/
-// Add element at begin
-void addElementAtBegin(Household* oriHousehold, Household node1)
+// Add element in the middle
+void addElementAtMiddle(Household *oriHousehold, string name, Household nodex)
 {
-    node1.next = oriHousehold;
-    oriHousehold = &node1;
+    Household *find = findByName(oriHousehold, name);
+
+    nodex.next = find->next;
+    find->next = &nodex;
 
     // Show linked list
-    Household* tmp = oriHousehold;
+    Household *tmp = oriHousehold;
 
+    // Print linked list
+    while (tmp != nullptr)
+    {
+        cout << tmp->name;
+        tmp = tmp->next;
+
+        if (tmp != nullptr)
+            cout << " ---> ";
+    }
+}
+
+/*Delete node*/
+// Delete node at the end
+void deleteLastNode(Household *oriHousehold)
+{
+    Household *penultimateNode = findPenultimateNode(oriHousehold);
+    Household *lastNode = findLastNode(oriHousehold);
+
+    penultimateNode->next = nullptr;
+    delete lastNode;
+
+    // Show linked list
+    Household *tmp = oriHousehold;
+
+    // Print linked list
     while (tmp != nullptr)
     {
         cout << tmp->name;
@@ -141,7 +208,7 @@ int main()
     Household household1("House hold 1"), household2("House hold 2"), household3("House hold 3");
 
     // Set house hold 1 as the original household
-    Household* oriHousehold = &household1;
+    Household *oriHousehold = &household1;
 
     // Connect nodes
     household1.next = &household2;
@@ -166,6 +233,13 @@ int main()
     // addElementAtBegin(oriHousehold, household0);
 
     Household householdLast("Last element");
-    addElementAtEnd(oriHousehold, householdLast);
-    
+    // addElementAtEnd(oriHousehold, householdLast);
+
+    // string name;
+    // cout << "Enter node's name: ";
+    // getline(cin, name);
+
+    // addElementAtMiddle(oriHousehold, name, householdLast);
+
+    deleteLastNode(oriHousehold);
 }
