@@ -7,25 +7,26 @@ class Broker
 public:
     string name;
     string buyPrice;
-    Broker *nextBuyer = nullptr;
+    Broker* nextBuyer = nullptr;
 
-    Broker(string name = "", string buyPrice = "") : name(name), buyPrice(buyPrice){};
+    Broker(string name = "", string buyPrice = "") : name(name), buyPrice(buyPrice) {};
 };
 
 // Traversal function
-void traversal(Broker *head)
+void traversal(Broker* head)
 {
     // Show linked list
-    Broker *tmp = head;
+    Broker* tmp = head;
 
-    cout << "David: initially bought the house for $800" << endl;
+    cout << tmp->name << ": initially bought the house for " << tmp->buyPrice << endl;
     while (tmp != nullptr)
     {
-        cout << tmp->name;
+        if (tmp->nextBuyer != nullptr)
+        {
+            cout << endl << tmp->name << " --> " << tmp->nextBuyer->name << " : price = " << tmp->nextBuyer->buyPrice;
+        }
+        
         tmp = tmp->nextBuyer;
-
-        if (tmp != nullptr)
-            cout << " ---> ";
     }
 }
 
@@ -37,7 +38,7 @@ int main()
     Broker person1("David", "$800"), person2("John", "$1000"), person3("Peter", "$1200"),
         person4("Luna", "$1800"), person5("Sophia", "$3500");
 
-    Broker *head = &person1;
+    Broker* head = &person1;
 
     person1.nextBuyer = &person2;
     person2.nextBuyer = &person3;
