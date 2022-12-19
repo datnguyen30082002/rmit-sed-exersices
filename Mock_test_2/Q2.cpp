@@ -33,34 +33,44 @@ void traversal(Broker* head)
 // Find lowest profit function
 void printLowestProfit(Broker* head)
 {
-    int profit = 0;
-
     Broker* tmp = head;
-    Broker* max = head;
+
+    int MinProfit;
+    if (head->nextBuyer != nullptr)
+    {
+        MinProfit = head->nextBuyer->buyPrice - head->buyPrice;
+    }
 
     while (tmp != nullptr)
     {
         if (tmp->nextBuyer != nullptr)
         {
-            profit = tmp->nextBuyer->buyPrice - tmp->buyPrice;
-            cout << tmp->name << " Buy price: " << tmp->buyPrice << ", sell price: " << tmp->nextBuyer->buyPrice << " Profit: " << profit << endl;
-
-            if (max->nextBuyer != nullptr)
+            int currentProfit = tmp->nextBuyer->buyPrice - tmp->buyPrice;
+            if (currentProfit < MinProfit)
             {
-                int MaxProfit = max->nextBuyer->buyPrice - max->buyPrice;
-                // cout << ", MaxProfit = " << MaxProfit << endl;
-                if (MaxProfit < profit)
-                {
-                    max = tmp;
-                }
+                MinProfit = currentProfit;
             }
         }
 
         tmp = tmp->nextBuyer;
     }
 
-    cout << ", MaxProfit = " << profit << endl;
-    cout << max->name << " Buy price: " << max->buyPrice << ", sell price: " << max->nextBuyer->buyPrice << endl;
+    cout << ", MinProfit = " << MinProfit << endl;
+    
+    tmp = head;
+    while (tmp != nullptr)
+    {
+        if (tmp->nextBuyer != nullptr)
+        {
+            int currentProfit = tmp->nextBuyer->buyPrice - tmp->buyPrice;
+            if (currentProfit == MinProfit)
+            {
+                cout << tmp->name << " Buy price: " << tmp->buyPrice << ", sell price: " << tmp->nextBuyer->buyPrice << " Profit: " << MinProfit << endl;
+            }
+        }
+
+        tmp = tmp->nextBuyer;
+    }
 }
 
 int main()
