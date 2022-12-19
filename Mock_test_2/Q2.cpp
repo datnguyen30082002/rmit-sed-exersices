@@ -6,10 +6,10 @@ class Broker
 {
 public:
     string name;
-    string buyPrice;
+    int buyPrice;
     Broker* nextBuyer = nullptr;
 
-    Broker(string name = "", string buyPrice = "") : name(name), buyPrice(buyPrice) {};
+    Broker(string name = "", int buyPrice = 0) : name(name), buyPrice(buyPrice) {};
 };
 
 // Traversal function
@@ -23,7 +23,7 @@ void traversal(Broker* head)
     {
         if (tmp->nextBuyer != nullptr)
         {
-            cout << endl << tmp->name << " --> " << tmp->nextBuyer->name << " : price = " << tmp->nextBuyer->buyPrice;
+            cout << tmp->name << " --> " << tmp->nextBuyer->name << " : price = $" << tmp->nextBuyer->buyPrice << endl;
         }
         
         tmp = tmp->nextBuyer;
@@ -31,12 +31,25 @@ void traversal(Broker* head)
 }
 
 // Find lowest profit function
+void printLowestProfit(Broker *head)
+{
+    int profit = 0;
 
+    Broker *tmp = head;
+
+    while (tmp != nullptr)
+    {
+        profit = tmp->nextBuyer->buyPrice - tmp->buyPrice;
+        cout << tmp->name << " Buy price: " << tmp->buyPrice << " Profit: " << profit << endl;
+        
+        tmp = tmp->nextBuyer;
+    }
+}
 
 int main()
 {
-    Broker person1("David", "$800"), person2("John", "$1000"), person3("Peter", "$1200"),
-        person4("Luna", "$1800"), person5("Sophia", "$3500");
+    Broker person1("David", 800), person2("John", 1000), person3("Peter", 1200),
+        person4("Luna", 1800), person5("Sophia", 3500);
 
     Broker* head = &person1;
 
@@ -46,5 +59,7 @@ int main()
     person4.nextBuyer = &person5;
     person5.nextBuyer = nullptr;
 
-    traversal(head);
+    //traversal(head);
+
+    printLowestProfit(head);
 }
