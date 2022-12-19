@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 class Employee
@@ -44,7 +45,7 @@ private:
     double allowance;
 
 public:
-    Manager(string name = "", double salary = 0, double allowance = 0) : Employee(name), Employee(salary), allowance(allowance) {}
+    Manager(string name = "", double salary = 0, double allowance = 0) : Employee(name, salary), allowance(allowance) {}
 
     void setAllowance(double allowance)
     {
@@ -72,4 +73,18 @@ int main()
     employee1.showInfo();
     employee2.showInfo();
     manager1.showInfo();
+
+    vector<Manager *> Managers[5] = {
+        new (std::nothrow) Manager("manager 1", 500, 50),
+        new (std::nothrow) Manager("manager 2", 550, 55),
+        new (std::nothrow) Manager("manager 3", 600, 60),
+        new (std::nothrow) Manager("manager 4", 700, 70),
+        new (std::nothrow) Manager("manager 5", 800, 80)};
+
+    double totalIncome = 0;
+
+    for (int i = 0; i < Managers->size(); i++)
+    {
+        
+    }
 }
