@@ -39,7 +39,7 @@ public:
         cout << "----Name: " << name << ", Unit: " << price << endl;
     }
 
-    bool operator==(Product &product)
+    bool operator==(Product& product)
     {
         if (this->name == product.name && this->price == product.price)
             return true;
@@ -82,7 +82,7 @@ public:
     void showShopInfo()
     {
         cout << endl
-             << "Shop's name: " << name;
+            << "Shop's name: " << name;
     }
 
     void showShopInfoIncludeProducts()
@@ -103,7 +103,7 @@ private:
     float totalExpense;
 
 public:
-    Order(int orderId = 0, vector<Product> orders = {}, float totalExpense = 0) : orderId(orderId), orders(orders), totalExpense(totalExpense){};
+    Order(int orderId = 0, vector<Product> orders = {}, float totalExpense = 0) : orderId(orderId), orders(orders), totalExpense(totalExpense) {};
 
     void setOrderId(int orderId)
     {
@@ -201,22 +201,45 @@ public:
         {
             if (orderId == this->orders[i].orderId) // Check order ID
             {
-                for (int j = 0; j < this->orders[i].orders.size(); j++)
+                for (int k = 0; k < products.size(); k++) // return
                 {
-                    if (products[0] == this->orders[i].orders[j])
-                    if (this->orders[i].orders[j] == this->orders[j].orders[j])
+                    for (int j = 0; j < this->orders[i].orders.size(); j++) // bought
                     {
-                        if (accountType == true)
+                        if (products[k] == this->orders[i].orders[j])
                         {
-                            int discountPrice = this->orders[i].orders[j].getProductPrice() - (this->orders[i].orders[j].getProductPrice() * DISCOUNT_RATE);
-                            this->orders[i].totalExpense -= discountPrice;
-                        }
-                        else
-                        {
-                            this->orders[i].totalExpense -= this->orders[i].orders[j].getProductPrice();
+                            cout << "\n k = " << k <<  ", products[i] = " << products[k].name << ", j = " << j << ", products[j] = " << this->orders[i].orders[j].name << " \n";
+
+                            if (accountType == true)
+                            {
+                                int discountPrice = this->orders[i].orders[j].getProductPrice() - (this->orders[i].orders[j].getProductPrice() * DISCOUNT_RATE);
+                                this->orders[i].totalExpense -= discountPrice;
+                            }
+                            else
+                            {
+                                this->orders[i].totalExpense -= this->orders[i].orders[j].getProductPrice();
+                            }
+
+                            this->orders[i].orders.erase(this->orders[i].orders.begin() + j);
                         }
 
-                        this->orders[i].orders.erase(this->orders[i].orders.begin() + j);
+                        /*if (products[0] == this->orders[i].orders[j])
+                        {
+                            if (this->orders[i].orders[j] == this->orders[j].orders[j])
+                            {
+                                if (accountType == true)
+                                {
+                                    int discountPrice = this->orders[i].orders[j].getProductPrice() - (this->orders[i].orders[j].getProductPrice() * DISCOUNT_RATE);
+                                    this->orders[i].totalExpense -= discountPrice;
+                                }
+                                else
+                                {
+                                    this->orders[i].totalExpense -= this->orders[i].orders[j].getProductPrice();
+                                }
+
+                                this->orders[i].orders.erase(this->orders[i].orders.begin() + j);
+                            }
+                        }*/
+
                     }
                 }
             }
@@ -266,7 +289,7 @@ int main()
     // shop1.showShopInfoIncludeProducts();
 
     // Initialize accounts
-    vector<Product> list1 = {product1, product2, product3};
+    vector<Product> list1 = { product1, product2, product3 };
     Account acc1("acc 1", {}, true);
     //acc1.buyProduct({product1, product2, product3});
     //acc1.buyProduct({product2, product3, product4});
@@ -275,7 +298,21 @@ int main()
     // acc1.returnProduct(1, {product2});
 
     Account acc2("acc 2", {}, false);
-    acc2.buyProduct({ product8, product9, product10 });
+    acc2.buyProduct({ product8, product9, product10, product11, product12 });
     acc2.showAccountInfo();
-    acc2.returnProduct(1, { product8 });
+    acc2.returnProduct(1, { product10, product11, product12 });
+
+    int a[10] = { 1, 2, 3, 4,5, 6,7,8,9,10 }; // bought
+    int b[4] = { 3, 5, 6, 10 }; // return
+    
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            if (b[i] == a[j])
+            {
+                // correct
+            }
+        }
+    }
 }
