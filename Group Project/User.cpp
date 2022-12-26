@@ -77,7 +77,6 @@ void User::setHouse(House house)
     this->house = house;
 }
 
-
 int User::getRole()
 {
     return role;

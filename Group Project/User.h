@@ -1,57 +1,77 @@
-#include <iostream>
-#include <string>
+#pragma once
+#include "Header.h"
 #include "House.h"
-using namespace std;
-
 
 class User
 {
 private:
-    string username;
-    string password;
-    string fullname;
-    string phone_number;
-    int credit_point;
-    House house;
+	string username;
+	string password;
+	string fullname;
+	string phone_number;
+	int credit_point;
+	House house;
+	int role;
 
 public:
-    // Parameterized constructor
-    User(string username, string fullname, string phone_number, int credit_point)
-    
-    User(string username, string password, string fullname, string phone_number, House house)
-    
 
-    // Get/Set method
-    string getUsername();
-    
+	User();
 
-    void setUsername(string username);
-   
-    string getPassword();
-    
+	// Parameterized constructor
+	User(string username,  string password, string fullname, string phone_number, int credit_point);
 
-    void setPassword(string password);
-    
+	//User(string username, string password, string fullname, string phone_number, House house);
 
-    string getFullname();
-    
-    void setFullname(string fullname);
-    
+	// Get/Set method
+	string getUsername();
 
-    string getPhone_number()
-    {
-        return phone_number;
-    }
+	void setUsername(string username);
 
-    void setPhone_number(string phone_number);
-    
-    int getCredit_point();
-    
-    void setCredit_point(int credit_point);
-    
-    void setHouse(House house);
-    
-    bool registerMember(User user);
-   
-    void showInfo();
+	string getPassword();
+
+	void setPassword(string password);
+
+	string getFullname();
+
+	void setFullname(string fullname);
+
+	string getPhone_number();
+
+	void setPhone_number(string phone_number);
+
+	int getCredit_point();
+
+	void setCredit_point(int credit_point);
+
+	void setHouse(House house);
+
+	int getRole();
+
+	void setRole(int role);
+
+	bool registerMember(User user);
+
+	void showInfo();
+
+	void showInfoIncludeHouse();
 };
+
+void showUserHeader();
+
+void showUserHeaderIncludeHouse();
+
+
+bool caseInsensitiveStringCompare(const string& str1, const string& str2);
+
+// Show info function
+void showUsersInfo(vector<User*> users, bool includeHouse);
+
+bool validateUsernameOfUser(vector<User*> users, string username);
+
+// Check password function
+bool validatePasswordOfUser(vector<User*> users, string password);
+
+// Check phone number function
+bool validatePhoneNumberOfUser(vector<User*> users, string phoneNumber);
+
+
