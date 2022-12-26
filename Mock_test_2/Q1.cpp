@@ -74,17 +74,46 @@ int main()
     employee2.showInfo();
     manager1.showInfo();
 
-    vector<Manager *> Managers[5] = {
-        new (std::nothrow) Manager("manager 1", 500, 50),
-        new (std::nothrow) Manager("manager 2", 550, 55),
-        new (std::nothrow) Manager("manager 3", 600, 60),
-        new (std::nothrow) Manager("manager 4", 700, 70),
-        new (std::nothrow) Manager("manager 5", 800, 80)};
+    // Vector method
+    // vector<Manager *> managers = {
+    //     new (std::nothrow) Manager("manager 1", 500, 50),
+    //     new (std::nothrow) Manager("manager 2", 550, 55),
+    //     new (std::nothrow) Manager("manager 3", 600, 60),
+    //     new (std::nothrow) Manager("manager 4", 700, 70),
+    //     new (std::nothrow) Manager("manager 5", 800, 80)};
 
-    double totalIncome = 0;
+    // double totalIncome = 0;
 
-    for (int i = 0; i < Managers->size(); i++)
+    // for (auto s : managers)
+    // {
+    //     totalIncome += (s->getSalary() + s->getAllowance());
+    // }
+
+    // double avgTotalIncome = totalIncome / managers.size();
+    // cout << "Average total income of 5 managers: " << avgTotalIncome << endl;
+
+    // Create an array of 5 managers using dynamic memory allcation
+    Manager *managers = new (std::nothrow) Manager[5]{
+        Manager("manager1", 1000, 100),
+        Manager("manager2", 3000, 200),
+        Manager("manager3", 2000, 300),
+        Manager("manager4", 4000, 200),
+        Manager("manager5", 2000, 100)};
+
+    if (managers == nullptr)
     {
-        
+        cout << "Fail to request memory allocation \n";
+        return -1;
     }
+
+    // Look through all elements to caculate sum and everage
+    double incomeSum = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        cout << "\n i = " << i << ", " << managers[i].getSalary() + managers[i].getAllowance();
+        incomeSum += (managers[i].getSalary() + managers[i].getAllowance());
+    }
+    
+    cout << "\n incomeSum = " << incomeSum;
+    cout << "Average of total income = " << incomeSum / 5;
 }
