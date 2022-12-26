@@ -12,6 +12,7 @@ private:
 	int credit_point;
 	House house;
 	int role;
+    
 
 public:
 
