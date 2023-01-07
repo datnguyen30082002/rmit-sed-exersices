@@ -11,6 +11,8 @@ private:
 public:
     RentDate();
 
+    RentDate(bool isNow);
+
     RentDate(int day, int month, int year);
 
     int getDay();

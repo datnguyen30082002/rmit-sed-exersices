@@ -8,12 +8,12 @@ private:
     int reviewId;
     int reviewHouseId;
     string reviewer;
-    int score;
-    string comment;
+    int score = 0;
+    string comment = "";
     RentDate reviewDate;
     string houseOwner;
-    int ownerScore;
-    string ownerComment;
+    int ownerScore = 0;
+    string ownerComment = "";
     RentDate ownerReviewDate;
     bool ownerWriteReview = false;
 

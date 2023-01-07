@@ -79,7 +79,6 @@ int main()
 	User* user6 = new (std::nothrow) User("user6", "1", "User 6", "0955764202", 500, 7);
 	User* user7 = new (std::nothrow) User("user7", "1", "User 7", "0955764202", 500, 7);
 
-
 	House* house1 = new (std::nothrow) House(1, "HCM", "house of user 1", true, 100, 5, false);
 	House* house2 = new (std::nothrow) House(2, "Ha Noi", "house of user 2", true, 120, 6, false);
 	House* house3 = new (std::nothrow) House(3, "Hue", "house of user 3", true, 150, 7, true);
@@ -87,6 +86,8 @@ int main()
 	House* house5 = new (std::nothrow) House(5, "Hue", "house of user 5", false, 190, 8, false);
 	House* house6 = new (std::nothrow) House(6, "Ha Noi", "house of user 6", true, 150, 5, false);
 	House* house7 = new (std::nothrow) House(7, "Hue", "house of user 7", true, 120, 0, false);
+
+	
 
 	admin1->setRole(3);
 	admin2->setRole(3);
@@ -115,11 +116,14 @@ int main()
 	house6->setUsername(user6->getUsername());
 	house7->setUsername(user7->getUsername());
 
+	vector<string> requestOccupation = { "user1", "user2", "user3" };
+	house7->setRequestOccupation(requestOccupation);
+
 	// for testing
 	/*house2->setAcceptOccupation("user1");
 	house2->setRentStatus(true);
 	house2->setHouseReviewId(1);*/
-	Review* review1 = new (std::nothrow) Review();
+	// Review* review1 = new (std::nothrow) Review();
 	/*review1->setReviewId(1);
 	review1->setReviewHouseId(2);
 	review1->setReviewer("user1");
@@ -132,9 +136,9 @@ int main()
 	review1->setOwnerReviewDate(RentDate(5, 1, 2023));*/
 
 
-	showAllHouseHeader();
+	/*showAllHouseHeader();
 	cout << endl;
-	house1->showAllInfo();
+	house1->showAllInfo();*/
 
 	// house1->addPersonToRequestList("name");
 	// cout << "\n size = ";
@@ -142,10 +146,10 @@ int main()
 
 	vector<User*> users = { admin1, admin2, user1, user2, user3, user4, user5, user6, user7 };
 	vector<House*> houses = { house1, house2, house3,house4, house5, house6, house7 };
-	vector<Review*> reviews = { review1 };
+	vector<Review*> reviews = { };
 
 	showUsersInfo(users, true);
-	showBasicHouseInfo(houses);
+	// showBasicHouseInfo(houses);
 	showHouseInfo(houses, users);
 	// showAvailableHouseInfo(houses);
 
@@ -516,7 +520,7 @@ int main()
 
 							// Review house and set the house owner attribute
 							maxReviewId = findMaxReviewId(reviews);
-							Review review(maxReviewId + 1, globalHouse.getId(), occuppierName, 0, "", RentDate());
+							Review review(maxReviewId + 1, globalHouse.getId(), occuppierName, 0, "", RentDate(true));
 							review.setHouseOwner(user->getUsername());
 							reviews.push_back(&review);
 
