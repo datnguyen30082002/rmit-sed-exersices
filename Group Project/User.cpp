@@ -1,23 +1,33 @@
 #include "User.h"
 #include "Utils.h"
 
-User::User() {}
+User::User(){};
 
-User::User(string username, string password, string fullname, string phone_number, int credit_point)
+User::User(string username, string password, string fullname, string phoneNumber, int creditPoint)
 {
     this->username = username;
     this->password = password;
     this->fullname = fullname;
-    this->phone_number = phone_number;
-    this->credit_point = credit_point;
+    this->phoneNumber = phoneNumber;
+    this->creditPoint = creditPoint;
 }
 
-// User::User(string username, string password, string fullname, string phone_number, House house)
+User::User(string username, string password, string fullname, string phoneNumber, int creditPoint, int ratingScore)
+{
+    this->username = username;
+    this->password = password;
+    this->fullname = fullname;
+    this->phoneNumber = phoneNumber;
+    this->creditPoint = creditPoint;
+    this->ratingScore = ratingScore;
+}
+
+// User::User(string username, string password, string fullname, string phoneNumber, House house)
 // {
 //     this->username = username;
 //     this->password = password;
 //     this->fullname = fullname;
-//     this->phone_number = phone_number;
+//     this->phoneNumber = phoneNumber;
 //     this->house = house;
 // }
 
@@ -52,24 +62,34 @@ void User::setFullname(string fullname)
     this->fullname = fullname;
 }
 
-string User::getPhone_number()
+string User::getPhoneNumber()
 {
-    return phone_number;
+    return phoneNumber;
 }
 
-void User::setPhone_number(string phone_number)
+void User::setPhoneNumber(string phoneNumber)
 {
-    this->phone_number = phone_number;
+    this->phoneNumber = phoneNumber;
 }
 
-int User::getCredit_point()
+int User::getCreditPoint()
 {
-    return credit_point;
+    return creditPoint;
 }
 
-void User::setCredit_point(int credit_point)
+void User::setCreditPoint(int creditPoint)
 {
-    this->credit_point = credit_point;
+    this->creditPoint = creditPoint;
+}
+
+int User::getRatingScore()
+{
+    return ratingScore;
+}
+
+void User::setRatingScore(int ratingScore)
+{
+    this->ratingScore = ratingScore;
 }
 
 void User::setHouse(House house)
@@ -99,9 +119,9 @@ void User::showInfo()
     cout.width(USER_FULLNAME_WIDTH);
     cout << left << fullname;
     cout.width(USER_PHONE_NUMBER_WIDTH);
-    cout << left << phone_number;
+    cout << left << phoneNumber;
     cout.width(USER_CREDIT_POINT_WIDTH);
-    cout << left << credit_point;
+    cout << left << creditPoint;
     cout.width(USER_ROLE_WIDTH);
     if (role == 2)
     {
@@ -119,9 +139,9 @@ void User::showInfoIncludeHouse()
     cout.width(USER_FULLNAME_WIDTH);
     cout << left << fullname;
     cout.width(USER_PHONE_NUMBER_WIDTH);
-    cout << left << phone_number;
+    cout << left << phoneNumber;
     cout.width(USER_CREDIT_POINT_WIDTH);
-    cout << left << credit_point;
+    cout << left << creditPoint;
     cout.width(USER_ROLE_WIDTH);
     if (role == 2)
     {
@@ -129,10 +149,11 @@ void User::showInfoIncludeHouse()
     }
     else
         cout << left << "Admin";
-    if (house.getId() == 0)
-        cout << "There is no house for this user";
+    if (house.getId() <= 0)
+        // cout << "There is no house for this user";
+        cout << " N/A ";
     else
-        house.showInfo();
+        house.showBasicInfo();
 }
 
 // Format user output
@@ -149,7 +170,6 @@ void showUserHeader()
     cout << left << "Credit point";
     cout.width(USER_ROLE_WIDTH);
     cout << left << "Role";
-    // cout << endl;
 }
 
 void showUserHeaderIncludeHouse()
@@ -171,7 +191,6 @@ void showUserHeaderIncludeHouse()
     cout << left << "Location";
     cout.width(HOUSE_DESCRIPTION);
     cout << left << "Description";
-    // cout << endl;
 }
 
 // Show info function
@@ -267,7 +286,7 @@ bool validatePhoneNumberOfUser(vector<User *> users, string phoneNumber)
     // Check if the phone number has existed or not
     for (int i = 0; i < users.size(); i++)
     {
-        if ((users[i]->getPhone_number() == phoneNumber))
+        if ((users[i]->getPhoneNumber() == phoneNumber))
         {
             cout << "Phone number " << phoneNumber << " has already existed!" << endl;
             check = false;
@@ -275,4 +294,17 @@ bool validatePhoneNumberOfUser(vector<User *> users, string phoneNumber)
     }
 
     return check;
+}
+
+User findByUsername(vector<User *> users, string username)
+{
+    for (int i = 0; i < users.size(); i++)
+    {
+        if (caseInsensitiveStringCompare(users[i]->getUsername(), username))
+        {
+            User user(users[i]->getUsername(), users[i]->getPassword(), users[i]->getFullname(), users[i]->getPhoneNumber(), users[i]->getCreditPoint());
+            return user;
+        }
+    }
+    return User();
 }

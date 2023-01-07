@@ -1,5 +1,6 @@
 #pragma once
 #include "Header.h"
+#include "RentDate.h"
 
 class House
 {
@@ -8,40 +9,90 @@ private:
     string location;
     string description;
     string username;
+    string acceptOccupation;
+    vector<string> requestOccupation;
     bool status;
+    bool rentStatus = false;
     int consumingPoint;
     int minOccupierRating;
+    RentDate rentDate;
+    int reviewId;
+
 public:
     House();
 
-    House(int id, string location, string description, bool show);
+    House(int id, string location, string description, bool status);
+
+    House(int id, string location, string description, bool status, int consumingPoint, int minOccupierRating);
+
+    House(int id, string location, string description, bool status, int consumingPoint, int minOccupierRating, bool rentStatus);
+
+    House(int id, string location, string description, bool status, int consumingPoint, int minOccupierRating, bool rentStatus, RentDate rentDate);
 
     void setId(int id);
 
     int getId();
 
     void setLocation(string location);
-   
+
     string getLocation();
-    
+
     void setDescription(string description);
-    
+
     string getDescription();
 
     void setUsername(string username);
 
     string getUsername();
 
+    void setAcceptOccupation(string acceptOccupation);
+
+    string getAcceptOccupation();
+
+    void addPersonToRequestList(string name);
+
+    void setRequestOccupation(vector<string> requestOccupation);
+
+    vector<string> getRequestOccupation();
+
     void setStatus(bool status);
 
     bool getStatus();
 
-    void showInfo();
+    void setRentStatus(bool rentStatus);
+
+    bool getRentStatus();
+
+    void setConsumingPoint(int consumingPoint);
+
+    int getConsumingPoint();
+
+    void setMinOccupierRating(int minOccupierRating);
+
+    int getMinOccupierRating();
+
+    void setRentDate(RentDate rentDate);
+
+    int getHouseReviewId();
+
+    void setHouseReviewId(int reviewId);
+
+    void showBasicInfo();
+
+    void showAllInfo();
+
+    void showAllRequestOccupation();
+
+    friend class Review;
 };
 
-void showHouseInfoHeader();
+void showBasicHouseHeader();
 
-void showHouseInfo(vector<House*> houses);
+void showAllHouseHeader();
+
+void showBasicHouseInfo(vector<House *> houses);
+
+void showAllHouseInfo(vector<House *> houses);
 
 void showAvailableHouseInfo(vector<House *> houses);
 

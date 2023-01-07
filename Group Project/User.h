@@ -8,20 +8,21 @@ private:
 	string username;
 	string password;
 	string fullname;
-	string phone_number;
-	int credit_point;
+	string phoneNumber;
+	int creditPoint;
+	int ratingScore;
 	House house;
 	int role;
-    
 
 public:
-
 	User();
 
 	// Parameterized constructor
-	User(string username,  string password, string fullname, string phone_number, int credit_point);
+	User(string username, string password, string fullname, string phoneNumber, int creditPoint);
 
-	//User(string username, string password, string fullname, string phone_number, House house);
+	User(string username, string password, string fullname, string phoneNumber, int creditPoint, int ratingScore);
+
+	//User(string username, string password, string fullname, string phoneNumber, House house);
 
 	// Get/Set method
 	string getUsername();
@@ -36,13 +37,17 @@ public:
 
 	void setFullname(string fullname);
 
-	string getPhone_number();
+	string getPhoneNumber();
 
-	void setPhone_number(string phone_number);
+	void setPhoneNumber(string phoneNumber);
 
-	int getCredit_point();
+	int getCreditPoint();
 
-	void setCredit_point(int credit_point);
+	void setCreditPoint(int creditPoint);
+
+	int getRatingScore();
+
+	void setRatingScore(int ratingScore);
 
 	void setHouse(House house);
 
@@ -55,24 +60,25 @@ public:
 	void showInfo();
 
 	void showInfoIncludeHouse();
+
+	friend class Review;
 };
 
 void showUserHeader();
 
 void showUserHeaderIncludeHouse();
 
-
-bool caseInsensitiveStringCompare(const string& str1, const string& str2);
+bool caseInsensitiveStringCompare(const string &str1, const string &str2);
 
 // Show info function
-void showUsersInfo(vector<User*> users, bool includeHouse);
+void showUsersInfo(vector<User *> users, bool includeHouse);
 
-bool validateUsernameOfUser(vector<User*> users, string username);
+bool validateUsernameOfUser(vector<User *> users, string username);
 
 // Check password function
-bool validatePasswordOfUser(vector<User*> users, string password);
+bool validatePasswordOfUser(vector<User *> users, string password);
 
 // Check phone number function
-bool validatePhoneNumberOfUser(vector<User*> users, string phoneNumber);
+bool validatePhoneNumberOfUser(vector<User *> users, string phoneNumber);
 
-
+User findByUsername(vector<User *> users, string username);
