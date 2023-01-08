@@ -30,4 +30,6 @@ public:
     void showDateInfo();
 
     friend class House;
+
+    string toString();
 };

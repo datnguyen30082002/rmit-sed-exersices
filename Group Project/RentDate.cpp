@@ -68,3 +68,19 @@ void RentDate::showDateInfo()
 	cout << left << year;
 	cout << endl;
 }
+
+string RentDate::toString()
+{
+	string strdate = "";
+	if (this->day > 0 && this->month > 0 && this->year > 0)
+	{
+		strdate.append(to_string(this->day));
+		strdate.append("/");
+		strdate.append(to_string(this->month));
+		strdate.append("/");
+		strdate.append(to_string(this->year));
+	}
+	else
+		strdate = "N/A";
+	return strdate;
+}

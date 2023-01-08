@@ -12,7 +12,7 @@ User::User(string username, string password, string fullname, string phoneNumber
     this->creditPoint = creditPoint;
 }
 
-User::User(string username, string password, string fullname, string phoneNumber, int creditPoint, int ratingScore)
+User::User(string username, string password, string fullname, string phoneNumber, int creditPoint, float ratingScore)
 {
     this->username = username;
     this->password = password;
@@ -82,14 +82,19 @@ void User::setCreditPoint(int creditPoint)
     this->creditPoint = creditPoint;
 }
 
-int User::getRatingScore()
+float User::getRatingScore()
 {
     return ratingScore;
 }
 
-void User::setRatingScore(int ratingScore)
+void User::setRatingScore(float ratingScore)
 {
     this->ratingScore = ratingScore;
+}
+
+House User::getUserHouse()
+{
+    return this->house;
 }
 
 void User::setHouse(House house)
@@ -107,6 +112,16 @@ void User::setRole(int role)
     this->role = role;
 }
 
+int User::getUserHouseId() 
+{
+    return this->userHouseId;
+}
+
+void User::setUserHouseId(int UserHouseId)
+{
+    this->userHouseId = userHouseId;
+}
+
 bool User::registerMember(User user)
 {
     return true;
@@ -122,6 +137,8 @@ void User::showInfo()
     cout << left << phoneNumber;
     cout.width(USER_CREDIT_POINT_WIDTH);
     cout << left << creditPoint;
+    cout.width(USER_RATING_SCORE_WIDTH);
+    cout << left << ratingScore;
     cout.width(USER_ROLE_WIDTH);
     if (role == 2)
     {
@@ -142,6 +159,8 @@ void User::showInfoIncludeHouse()
     cout << left << phoneNumber;
     cout.width(USER_CREDIT_POINT_WIDTH);
     cout << left << creditPoint;
+    cout.width(USER_RATING_SCORE_WIDTH);
+    cout << left << ratingScore;
     cout.width(USER_ROLE_WIDTH);
     if (role == 2)
     {
@@ -168,6 +187,8 @@ void showUserHeader()
     cout << left << "Phone number";
     cout.width(USER_CREDIT_POINT_WIDTH);
     cout << left << "Credit point";
+    cout.width(USER_RATING_SCORE_WIDTH);
+    cout << left << "Rating score";
     cout.width(USER_ROLE_WIDTH);
     cout << left << "Role";
 }
@@ -183,6 +204,8 @@ void showUserHeaderIncludeHouse()
     cout << left << "Phone number";
     cout.width(USER_CREDIT_POINT_WIDTH);
     cout << left << "Credit point";
+    cout.width(USER_RATING_SCORE_WIDTH);
+    cout << left << "Rating score";
     cout.width(USER_ROLE_WIDTH);
     cout << left << "Role";
     cout.width(HOUSE_ID);

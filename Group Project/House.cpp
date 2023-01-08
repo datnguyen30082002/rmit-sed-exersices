@@ -153,6 +153,21 @@ int House::getMinOccupierRating()
 	return minOccupierRating;
 }
 
+void House::setHouseRatingScore(float houseRatingScore)
+{
+	this->houseRatingScore = houseRatingScore;
+}
+
+float House::getHouseRatingScore()
+{
+	return this->houseRatingScore;
+}
+
+RentDate House::getRentDate()
+{
+	return this->rentDate;
+}
+
 void House::setRentDate(RentDate rentDate)
 {
 	this->rentDate = rentDate;
@@ -185,6 +200,8 @@ void House::showAllInfo()
 	cout << left << consumingPoint;
 	cout.width(HOUSE_OCCUPIER_RATING);
 	cout << left << minOccupierRating;
+	cout.width(HOUSE_RATING_SCORE);
+	cout << left << houseRatingScore;
 	cout.width(HOUSE_RENT_STATUS);
 	if (rentStatus == true)
 		cout << left << "Not available";
@@ -200,10 +217,10 @@ void House::showAllInfo()
 void House::showAllRequestOccupation()
 {
 	cout << endl;
-	cout << "------ Name of request Occupation --------------------" << endl;
+	cout << "-------------------- Name of request occupiers --------------------" << endl;
 	for (int i = 0; i < this->requestOccupation.size(); i++)
 	{
-		cout << "-- " << i + 1 << ", name: " << requestOccupation[i] << endl;
+		cout << "--- " << i + 1 << ". Name: " << requestOccupation[i] << endl;
 	}
 }
 
@@ -232,7 +249,9 @@ void showAllHouseHeader()
 	cout.width(HOUSE_CONSUMING_POINT);
 	cout << left << "Consuming Point";
 	cout.width(HOUSE_OCCUPIER_RATING);
-	cout << left << "Occupier Rating";
+	cout << left << "Min Occupier Rating";
+	cout.width(HOUSE_RATING_SCORE);
+	cout << left << "Rating Score";
 	cout.width(HOUSE_RENT_STATUS);
 	cout << left << "Renting Status";
 	cout.width(HOUSE_RENT_DATE);

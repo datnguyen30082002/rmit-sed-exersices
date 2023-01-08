@@ -5,8 +5,8 @@
 class Review
 {
 private:
-    int reviewId;
-    int reviewHouseId;
+    int reviewId = 0;
+    int reviewHouseId = 0;
     string reviewer;
     int score = 0;
     string comment = "";
@@ -60,7 +60,7 @@ public:
 
     RentDate getOwnerReviewDate();
 
-    void setOwnerReviewDate(RentDate reviewDate);
+    void setOwnerReviewDate(RentDate ownerReviewDate);
 
     bool getOwnerWriteReview();
 

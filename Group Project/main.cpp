@@ -10,6 +10,7 @@
 #include <fstream>
 #include <limits>
 #include <ctime>
+#include <sstream>
 
 using namespace std;
 
@@ -65,13 +66,19 @@ int findMaxReviewId(vector<Review*> reviews)
 	return max;
 }
 
-
+std::string join(std::vector<std::string> const& strings, std::string delim)
+{
+	std::stringstream ss;
+	std::copy(strings.begin(), strings.end(), std::ostream_iterator<std::string>(ss, delim.c_str()));
+	return ss.str();
+}
 
 int main()
 {
+	// Initialize default data
 	User* admin1 = new (std::nothrow) User("admin1", "1", "ADMIN 1", "0912000111", 500);
 	User* admin2 = new (std::nothrow) User("admin2", "1", "ADMIN 2", "0912333555", 500);
-	User* user1 = new (std::nothrow) User("user1", "1", "User 1", "0823248508", 500, 9);
+	User* user1 = new (std::nothrow) User("user1", "1", "User 1", "0823248508", 500, 0);
 	User* user2 = new (std::nothrow) User("user2", "1", "User 2", "0855656565", 500, 3);
 	User* user3 = new (std::nothrow) User("user3", "1", "User 3", "0955764201", 500, 5);
 	User* user4 = new (std::nothrow) User("user4", "1", "User 4", "0955764202", 500, 7);
@@ -87,7 +94,7 @@ int main()
 	House* house6 = new (std::nothrow) House(6, "Ha Noi", "house of user 6", true, 150, 5, false);
 	House* house7 = new (std::nothrow) House(7, "Hue", "house of user 7", true, 120, 0, false);
 
-	
+	house1->setRentDate(new RentDate(true));
 
 	admin1->setRole(3);
 	admin2->setRole(3);
@@ -107,7 +114,6 @@ int main()
 	user6->setHouse(*house6);
 	user7->setHouse(*house7);
 
-
 	house1->setUsername(user1->getUsername());
 	house2->setUsername(user2->getUsername());
 	house3->setUsername(user3->getUsername());
@@ -116,6 +122,7 @@ int main()
 	house6->setUsername(user6->getUsername());
 	house7->setUsername(user7->getUsername());
 
+	// For testing
 	vector<string> requestOccupation = { "user1", "user2", "user3" };
 	house7->setRequestOccupation(requestOccupation);
 
@@ -134,7 +141,7 @@ int main()
 	review1->setHouseOwner("user2");
 	review1->setOwnerWriteReview(true);
 	review1->setOwnerReviewDate(RentDate(5, 1, 2023));*/
-
+	Review* review1 = new (std::nothrow) Review(1, 1, "user1", 5, "nice", RentDate());
 
 	/*showAllHouseHeader();
 	cout << endl;
@@ -145,86 +152,54 @@ int main()
 	// house1->getRequestOccupation().size();
 
 	vector<User*> users = { admin1, admin2, user1, user2, user3, user4, user5, user6, user7 };
-	vector<House*> houses = { house1, house2, house3,house4, house5, house6, house7 };
-	vector<Review*> reviews = { };
+	vector<House*> houses = { house1, house2, house3, house4, house5, house6, house7 };
+	vector<Review*> reviews = { review1 };
 
 	showUsersInfo(users, true);
 	// showBasicHouseInfo(houses);
 	showHouseInfo(houses, users);
 	// showAvailableHouseInfo(houses);
 
-	fstream myFile;
-	string userFile = "user.dat";
-	string houseFile = "house.dat";
+	//fstream myFile;
+	//string userFile = "user.dat";
+	//string houseFile = "house.dat";
 
-	/* Create user data file and write to that file*/
-	myFile.open(userFile, std::ios::out); // open file
+	///* Create user data file and write to that file*/
+	//myFile.open(userFile, std::ios::out); // open file
 
-	// If file cannot open then print out meaningful message
-	if (!myFile)
-	{
-		cerr << "Fail to open file \n";
-	}
+	//// If file cannot open then print out meaningful message
+	//if (!myFile)
+	//{
+	//	cerr << "Fail to open file \n";
+	//}
 
-	for (auto u : users)
-	{
-		myFile << u->getUsername() << ':' << u->getFullname() << ':'
-			<< u->getPassword() << u->getPhoneNumber() << ':' << u->getCreditPoint() << endl;
-	}
-	cout << endl
-		<< endl
-		<< "Saved user data to file!" << endl;
+	//for (auto u : users)
+	//{
+	//	myFile << u->getUsername() << ':' << u->getFullname() << ':'
+	//		   << u->getPassword() << u->getPhoneNumber() << ':' << u->getCreditPoint() << endl;
+	//}
+	//cout << endl
+	//	 << endl
+	//	 << "Saved user data to file!" << endl;
 
-	myFile.close(); // close file
+	//myFile.close(); // close file
 
-	/* Create house data file and write to that file*/
-	myFile.open(houseFile, std::ios::out); // open file
+	///* Create house data file and write to that file*/
+	//myFile.open(houseFile, std::ios::out); // open file
 
-	// If file cannot open then print out meaningful message
-	if (!myFile)
-	{
-		std::cerr << "Fail to open file \n";
-	}
+	//// If file cannot open then print out meaningful message
+	//if (!myFile)
+	//{
+	//	std::cerr << "Fail to open file \n";
+	//}
 
-	for (auto h : houses)
-	{
-		myFile << h->getId() << ":" << h->getLocation() << ':' << h->getDescription() << endl;
-	}
-	std::cout << "Saved house data to file!" << endl;
+	//for (auto h : houses)
+	//{
+	//	myFile << h->getId() << ":" << h->getLocation() << ':' << h->getDescription() << endl;
+	//}
+	//std::cout << "Saved house data to file!" << endl;
 
-	myFile.close(); // close file
-
-	// // Read user data and store back to user object
-	// vector<User *> myUsers;
-
-	// myFile.open(userFile, std::ios::in);
-
-	// if (!myFile)
-	// {
-	//      cerr << "Fail to open file \n";
-	// }
-
-	// // char *s = new char[100];
-	// // while (myFile.good())
-	// // {
-	// //      myFile.getline(s, 100, ',');
-	// //      myUsers.push_back(s);
-	// // }
-
-	// myFile.close();
-
-	// std::vector<std::string>::iterator it;
-	// for (it = myvector.begin(); it != myvector.end(); it++)
-	//      std::cout << *it << std::endl;
-
-	// while (!myFile.eof())
-	// {
-	//      // 1. read by a line
-	//      // 2. split by ; delimiter
-	//      // 3. parse to variable values
-	//      // 4. User *user1 = new (std::nothrow) User();
-	//      // user1.setUsername(usename) from varible
-	// }
+	//myFile.close(); // close file
 
 	int role, featureChoice, subFeature;
 	do
@@ -429,7 +404,7 @@ int main()
 
 			do
 			{
-				// Check if a user occupy a house or not		
+				// Check if a user occupy a house or not
 				for (auto house : houses)
 				{
 					if (caseInsensitiveStringCompare(house->getAcceptOccupation(), user->getUsername()) //
@@ -455,18 +430,18 @@ int main()
 				cout << endl
 					<< endl
 					<< "-------------------- Member's choice --------------------" << endl;
-				cout << endl
-					<< "1. View all information" << endl;
-				cout << "2. List available house to be occupied / List of requests" << endl;
-				cout << "3. Unlist house" << endl;
-				cout << "4. Search and request to occupy a house" << endl;
+				cout << "1. View all information" << endl;
+				cout << "2. List available house to be occupied" << endl;
+				cout << "3. List of requests" << endl;
+				cout << "4. Unlist house" << endl;
+				cout << "5. Search and request to occupy a house" << endl;
 				if (isOccupied)
 				{
-					cout << "5. Return occupied house" << endl;
+					cout << "6. Return occupied house" << endl;
 				}
 				if (isReviewed)
 				{
-					cout << "6. House owner reviews occupier" << endl;
+					cout << "7. House owner reviews occupier" << endl;
 				}
 				cout << "0. Back to main features" << endl;
 				cout << "Enter your choice: ";
@@ -485,6 +460,7 @@ int main()
 							break;
 						}
 					}
+
 					break;
 				case 2: // List available houses
 					cout << endl
@@ -499,6 +475,20 @@ int main()
 								showAllHouseHeader();
 								cout << endl;
 								house->showAllInfo();
+								break;
+							}
+						}
+					}
+
+					break;
+				case 3: // List of requests and accept one of the occupier requests
+					for (auto house : houses)
+					{
+						if (caseInsensitiveStringCompare(house->getUsername(), username))
+						{
+							if (house->getStatus() == true)
+							{
+								// List requests
 								house->showAllRequestOccupation();
 								globalHouse = *house;
 								break;
@@ -506,7 +496,6 @@ int main()
 						}
 					}
 
-					
 					cout << "Enter username that you want to accept request: ";
 					cin >> occuppierName;
 
@@ -519,10 +508,10 @@ int main()
 							globalHouse.setRentStatus(true);
 
 							// Review house and set the house owner attribute
-							maxReviewId = findMaxReviewId(reviews);
-							Review review(maxReviewId + 1, globalHouse.getId(), occuppierName, 0, "", RentDate(true));
-							review.setHouseOwner(user->getUsername());
-							reviews.push_back(&review);
+							maxReviewId = findMaxReviewId(reviews) + 1;
+							Review* review = new (std::nothrow) Review(maxReviewId, globalHouse.getId(), occuppierName, 0, "", RentDate(true));
+							review->setHouseOwner(user->getUsername());
+							reviews.push_back(review);
 
 							// Accept occupier's request and set the occupier's review Id
 							for (auto house : houses)
@@ -539,7 +528,7 @@ int main()
 					}
 
 					break;
-				case 3: // Unlist house (hide house)
+				case 4: // Unlist house (hide house)
 					for (auto house : houses)
 					{
 						if (caseInsensitiveStringCompare(house->getUsername(), username))
@@ -555,7 +544,7 @@ int main()
 						}
 					}
 					break;
-				case 4: // Search house
+				case 5: // Search house
 					do
 					{
 						cout << "Enter house location: ";
@@ -564,11 +553,11 @@ int main()
 
 					for (auto house : houses)
 					{
-						if (caseInsensitiveStringCompare(house->getLocation(), houseLocation) //
-							&& user->getCreditPoint() >= house->getConsumingPoint()            //
-							&& user->getRatingScore() >= house->getMinOccupierRating() //
+						if (caseInsensitiveStringCompare(house->getLocation(), houseLocation)			//
+							&& user->getCreditPoint() >= house->getConsumingPoint()						//
+							&& user->getRatingScore() >= house->getMinOccupierRating()					//
 							&& !caseInsensitiveStringCompare(house->getUsername(), user->getUsername()) //
-							&& house->getStatus() == true //
+							&& house->getStatus() == true												//
 							&& house->getRentStatus() == false)
 						{
 							found = true;
@@ -586,11 +575,11 @@ int main()
 						// Display houses that match your entered location
 						for (auto house : houses)
 						{
-							if (caseInsensitiveStringCompare(house->getLocation(), houseLocation) //
-								&& user->getCreditPoint() >= house->getConsumingPoint()            //
-								&& user->getRatingScore() >= house->getMinOccupierRating()         //
+							if (caseInsensitiveStringCompare(house->getLocation(), houseLocation)			//
+								&& user->getCreditPoint() >= house->getConsumingPoint()						//
+								&& user->getRatingScore() >= house->getMinOccupierRating()					//
 								&& !caseInsensitiveStringCompare(house->getUsername(), user->getUsername()) //
-								&& house->getStatus() == true //
+								&& house->getStatus() == true												//
 								&& house->getRentStatus() == false)
 							{
 								cout << endl;
@@ -621,30 +610,47 @@ int main()
 							<< "There is no available house for this user: " << user->getUsername();
 					}
 					break;
-				case 5: // Return house (check out)
+				case 6: // Return house (check out)
 					for (auto house : houses)
 					{
 						if (house->getId() == occupiedHouseId)
 						{
-							user->setCreditPoint(user->getCreditPoint() - house->getConsumingPoint());
+							// Update occupier's credit point
+							int remainCreditPoint = user->getCreditPoint() - house->getConsumingPoint();
+							user->setCreditPoint(remainCreditPoint);
+
+							// Update house owner's credit point
+							for (auto u : users)
+							{
+								if (caseInsensitiveStringCompare(u->getUsername(), house->getUsername()))
+								{
+									u->setCreditPoint(u->getCreditPoint() + house->getConsumingPoint());
+									break;
+								}
+							}
+
 							for (auto u : users)
 							{
 								if (caseInsensitiveStringCompare(u->getUsername(), user->getUsername()))
 								{
-									u->setCreditPoint(u->getCreditPoint() - house->getConsumingPoint());
+									u->setCreditPoint(remainCreditPoint);
 									break;
 								}
 							}
-							house->setRentStatus(false);
 
-							// Occupier writes review 
+							// Occupier writes review
 							for (auto review : reviews)
 							{
 								if (review->getReviewId() == house->getHouseReviewId())
 								{
 									int reviewScore;
-									cout << "Enter the review score: ";
-									cin >> reviewScore;
+									do
+									{
+										cout << "Enter the review score: ";
+										cin >> reviewScore;
+									} while (!(reviewScore >= -10 && reviewScore <= 10));
+
+
 
 									string reviewComment;
 									do
@@ -659,30 +665,58 @@ int main()
 									review->setReviewScore(reviewScore);
 									review->setReviewComment(reviewComment);
 
-									time_t now = time(0);
-									tm* ltm = localtime(&now);
-									RentDate rendate(ltm->tm_mday, ltm->tm_mon, ltm->tm_year);
+									RentDate rendate(true);
 									review->setReviewDate(rendate);
 
 									review->setOwnerWriteReview(true);
+
+									// update house's rating score
+									float totalHouseRatingScore = 0, countHouseRatingScore = 0;
+
+									for (auto r : reviews) // Check how many times that occupier occupy house
+									{
+										if (review->getReviewHouseId() == r->getReviewHouseId())
+										{
+											totalHouseRatingScore += r->getReviewScore();
+											countHouseRatingScore++;
+										}
+									}
+
+									cout << "\n 1. House's rating score before: " << house->getHouseRatingScore();
+
+									float averageRatingScoreOfHouse = totalHouseRatingScore / countHouseRatingScore;
+									house->setHouseRatingScore(averageRatingScoreOfHouse);
+
+									cout << "\n 2. House's rating score after: " << house->getHouseRatingScore();
+
 
 									showAllReviewHeader();
 									cout << endl;
 									review->showOccupierReview();
 								}
 							}
+
+							// Update house
+							house->setRentStatus(false);
+							house->setRequestOccupation({});
+							house->setAcceptOccupation("");
+							house->setHouseReviewId(0);
 						}
 					}
 					break;
 
-				case 6: // House owner review occupier
+				case 7: // House owner review occupier
 					for (auto review : reviews)
 					{
-						if (caseInsensitiveStringCompare(review->getHouseOwner(), user->getUsername()))
+						if (caseInsensitiveStringCompare(review->getHouseOwner(), user->getUsername()) //
+							&& review->getOwnerWriteReview() == true)
 						{
 							int ownerReviewScore;
-							cout << "Enter the review score: ";
-							cin >> ownerReviewScore;
+							do
+							{
+								cout << "Enter the review score: ";
+								cin >> ownerReviewScore;
+							} while (!(ownerReviewScore >= -10 && ownerReviewScore <= 10));
 
 							string ownerReviewComment;
 							do
@@ -693,21 +727,36 @@ int main()
 
 							review->setOwnerScore(ownerReviewScore);
 							review->setOwnerComment(ownerReviewComment);
-							review->setReviewId(maxReviewId + 1);
-							review->setReviewHouseId(house->getId());
-							review->setReviewer(user->getUsername());
-							review->setReviewScore(ownerReviewScore);
-							review->setReviewComment(ownerReviewComment);
-
-							time_t now = time(0);
-							tm* ltm = localtime(&now);
-							RentDate rendate(ltm->tm_mday, ltm->tm_mon, ltm->tm_year);
-							review->setReviewDate(rendate);
+							RentDate rendate(true);
+							review->setOwnerReviewDate(rendate);
 							review->setOwnerWriteReview(false);
 
 							showAllReviewHeader();
 							cout << endl;
 							review->showOwnerReview();
+
+							// Update occupier's rating score
+							float s = 0, countReviewer = 0;
+
+							for (auto r : reviews) // Check how many times that occupier occupy house
+							{
+								if (caseInsensitiveStringCompare(review->getReviewer(), r->getReviewer()))
+								{
+									s += r->getOwnerScore();
+									countReviewer++;
+								}
+							}
+
+							float averageRatingScoreOfReviewer = s / countReviewer; // Compute the average rating score
+
+							for (auto u : users) // Set the average rating score
+							{
+								if (caseInsensitiveStringCompare(u->getUsername(), review->getReviewer()))
+								{
+									u->setRatingScore(averageRatingScoreOfReviewer);
+									break;
+								}
+							}
 						}
 					}
 					break;
@@ -777,6 +826,142 @@ int main()
 
 	} while (role != 0);
 
+	// Save data to files
+	fstream myFile;
+	string userFile = "user.dat";
+	string houseFile = "house.dat";
+	string reviewFile = "review.dat";
+
+	myFile.open("user.dat", std::ios::out);
+	if (!myFile) {
+		cout << "Fail to create/open file \n";
+	}
+
+	//Store user data to the user data file
+	for (auto userData : users) {
+		myFile << userData->getUsername() << " : " << userData->getPassword() << " : " << userData->getFullname() << " : " << userData->getPhoneNumber() //
+			<< " : " << userData->getCreditPoint() << " : " << userData->getRatingScore() << " : " << userData->getRole() << " : " << userData->getUserHouse().getId() << "\n";
+	}
+
+	myFile.close();
+
+	myFile.open("house.dat", std::ios::out);
+	if (!myFile) {
+		cout << "Fail to create/open file \n";
+	}
+
+	// Store house data to the house data file
+	for (auto houseData : houses)
+	{
+		std::string delim = ", ";
+		std::string requestOccupationList = join(houseData->getRequestOccupation(), delim);
+
+		myFile << houseData->getId() << " : " << houseData->getLocation() << " : " << houseData->getDescription() << " : " //
+			<< houseData->getUsername() << " : " << houseData->getAcceptOccupation() << " : " << houseData->getStatus() << " : " << houseData->getRentStatus() << " : " //
+			<< houseData->getConsumingPoint() << " : " << houseData->getMinOccupierRating() << " : " << houseData->getHouseRatingScore() << " : " << houseData->getHouseReviewId() //
+			<< " : " << requestOccupationList << " : " << houseData->getRentDate().toString() << "\n";
+	}
+
+	myFile.close();
+
+	myFile.open("review.dat", std::ios::out);
+	if (!myFile) {
+		cout << "Fail to create/open file \n";
+	}
+
+	// Store review data to the review data file
+	for (auto reviewData : reviews)
+	{
+		myFile << reviewData->getReviewId() << " : " << reviewData->getReviewHouseId() << " : " << reviewData->getReviewer() << " : " //
+			<< reviewData->getReviewScore() << " : " << reviewData->getReviewComment() << " : " << reviewData->getReviewDate().toString() << " : " //
+			<< reviewData->getHouseOwner() << " : " << reviewData->getOwnerScore() << " : " << reviewData->getOwnerComment() << " : " << reviewData->getOwnerReviewDate().toString() //
+			<< " : " << reviewData->getOwnerWriteReview() << "\n";
+	}
+
+	myFile.close();
+
+	/* Reload data */
+	// Reload user data
+	myFile.open("user.dat", std::ios::in);
+
+	if (!myFile.is_open()) {
+		cout << "Fail to open file \n";
+	}
+
+	/* Reload data from the file */
+	string dataUsername, dataPassword, dataFullname, dataPhoneNumber, dataCreditPoint, dataRole, dataUserHouseId, dataRatingScore;
+
+	vector<User*> userImport = {};
+
+	while (!myFile.eof()) {
+
+		dataUsername = "", dataPassword = "", dataFullname = "", dataPhoneNumber = "", dataCreditPoint = "", dataRole = "", dataUserHouseId = "", dataRatingScore = "";
+		
+		//Read data from file
+		getline(myFile, dataUsername, ':'); //read name until seeing ':' character
+		getline(myFile, dataPassword, ':');
+		getline(myFile, dataFullname, ':');
+		getline(myFile, dataPhoneNumber, ':');
+		getline(myFile, dataCreditPoint, ':');
+		getline(myFile, dataRatingScore, ':');
+		getline(myFile, dataRole, ':');
+		getline(myFile, dataUserHouseId);
+
+		if (dataUsername == "")
+			break;
+
+		User* dataUser = new (std::nothrow) User(dataUsername, dataPassword, dataFullname, dataPhoneNumber, std::stoi(dataCreditPoint), std::stof(dataRatingScore));
+		dataUser->setRole(stoi(dataRole));
+
+		userImport.push_back(dataUser);
+	}
+
+	showUsersInfo(userImport, true);
+
+
+	cout << "\n vector users \n";
+	showUsersInfo(users, true);
+
+	// Reload house data
+	myFile.open("house.dat", std::ios::in);
+
+	if (!myFile.is_open()) {
+		cout << "Fail to open file \n";
+	}
+
+	/* Reload data from the file */
+	string dataHouseId, dataHouseLocation, dataHouseDescription, dataHouseUsername, dataHouseAcceptOccupation, dataHouseStatus, dataHouseRentStatus, dataHouseConsumingPoint, dataHouseMinOccupierRating, dataHouseRatingScore, dataHouseReviewId;
+
+	vector<House*> houseImport = {};
+
+	while (!myFile.eof()) {
+
+		dataHouseId = "", dataHouseLocation = "", dataHouseDescription = "", dataHouseUsername = "", dataHouseAcceptOccupation = "", dataHouseStatus = "", dataHouseRentStatus = "", dataHouseConsumingPoint = "", dataHouseMinOccupierRating = "", dataHouseRatingScore = "", dataHouseReviewId = "";
+
+		//Read data from file
+		getline(myFile, dataHouseId, ':'); //read name until seeing ':' character
+		getline(myFile, dataHouseLocation, ':');
+		getline(myFile, dataHouseDescription, ':');
+		getline(myFile, dataHouseUsername, ':');
+		getline(myFile, dataHouseAcceptOccupation, ':');
+		getline(myFile, dataHouseStatus, ':');
+		getline(myFile, dataHouseRentStatus, ':');
+		getline(myFile, dataHouseConsumingPoint, ':');
+		getline(myFile, dataHouseMinOccupierRating, ':');
+		getline(myFile, dataHouseRatingScore, ':');
+		getline(myFile, dataHouseReviewId);
+
+		if (dataHouseId == "")
+			break;
+
+		House* dataHouse = new (std::nothrow) House(dataUsername, dataPassword, dataFullname, dataPhoneNumber, std::stoi(dataCreditPoint), std::stof(dataRatingScore));
+		dataUser->setRole(stoi(dataRole));
+
+		userImport.push_back(dataUser);
+	}
+
+
+
+
 	return 0;
 }
-

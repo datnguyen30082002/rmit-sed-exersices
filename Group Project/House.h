@@ -5,7 +5,7 @@
 class House
 {
 private:
-    int id;
+    int id = 0;
     string location;
     string description;
     string username;
@@ -13,10 +13,11 @@ private:
     vector<string> requestOccupation;
     bool status;
     bool rentStatus = false;
-    int consumingPoint;
-    int minOccupierRating;
+    int consumingPoint = 0;
+    int minOccupierRating = 0;
+    float houseRatingScore = 0;
     RentDate rentDate;
-    int reviewId;
+    int reviewId = 0;
 
 public:
     House();
@@ -70,6 +71,12 @@ public:
     void setMinOccupierRating(int minOccupierRating);
 
     int getMinOccupierRating();
+
+    void setHouseRatingScore(float houseRatingScore);
+
+    float getHouseRatingScore();
+
+    RentDate getRentDate();
 
     void setRentDate(RentDate rentDate);
 

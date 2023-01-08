@@ -9,10 +9,11 @@ private:
 	string password;
 	string fullname;
 	string phoneNumber;
-	int creditPoint;
-	int ratingScore;
+	int creditPoint = 0;
+	float ratingScore = 0;
 	House house;
-	int role;
+	int role = 0;
+	int userHouseId = 0;
 
 public:
 	User();
@@ -20,7 +21,7 @@ public:
 	// Parameterized constructor
 	User(string username, string password, string fullname, string phoneNumber, int creditPoint);
 
-	User(string username, string password, string fullname, string phoneNumber, int creditPoint, int ratingScore);
+	User(string username, string password, string fullname, string phoneNumber, int creditPoint, float ratingScore);
 
 	//User(string username, string password, string fullname, string phoneNumber, House house);
 
@@ -45,15 +46,21 @@ public:
 
 	void setCreditPoint(int creditPoint);
 
-	int getRatingScore();
+	float getRatingScore();
 
-	void setRatingScore(int ratingScore);
+	void setRatingScore(float ratingScore);
+
+	House getUserHouse();
 
 	void setHouse(House house);
 
 	int getRole();
 
 	void setRole(int role);
+
+	int getUserHouseId();
+
+	void setUserHouseId(int UserHouseId);
 
 	bool registerMember(User user);
 
