@@ -138,7 +138,7 @@ int main()
 
 	// For testing
 	vector<string> requestOccupation = { "user1", "user2", "user3" };
-	house7->setRequestOccupation(requestOccupation);
+	house1->setRequestOccupation(requestOccupation);
 
 	// for testing
 	/*house2->setAcceptOccupation("user1");
@@ -946,7 +946,7 @@ int main()
 	}
 
 	/* Reload data from the file */
-	string dataHouseId, dataHouseLocation, dataHouseDescription, dataHouseUsername, dataHouseAcceptOccupation, dataHouseStatus, dataHouseRentStatus, dataHouseConsumingPoint, dataHouseMinOccupierRating, dataHouseRatingScore, dataHouseReviewId, dataHouseRequestList;
+	string dataHouseId, dataHouseLocation, dataHouseDescription, dataHouseUsername, dataHouseAcceptOccupation, dataHouseStatus, dataHouseRentStatus, dataHouseConsumingPoint, dataHouseMinOccupierRating, dataHouseRatingScore, dataHouseReviewId, dataHouseRequestList, strRendDate;
 
 	vector<House*> houseImport = {};
 
@@ -954,7 +954,7 @@ int main()
 
 		dataHouseId = "", dataHouseLocation = "", dataHouseDescription = "", dataHouseUsername = "", dataHouseAcceptOccupation = "";
 		dataHouseStatus = "", dataHouseRentStatus = "", dataHouseConsumingPoint = "", dataHouseMinOccupierRating = "", dataHouseRatingScore = "";
-		dataHouseReviewId = "", dataHouseRequestList = "";
+		dataHouseReviewId = "", dataHouseRequestList = "", strRendDate = "";
 
 		// Read data from file
 		getline(myFile, dataHouseId, ':'); // read until seeing ':' character
@@ -968,9 +968,8 @@ int main()
 		getline(myFile, dataHouseMinOccupierRating, ':');
 		getline(myFile, dataHouseRatingScore, ':');
 		getline(myFile, dataHouseReviewId, ':');
-		getline(myFile, dataHouseRequestList);
-	
-
+		getline(myFile, dataHouseRequestList, ':');
+		getline(myFile, strRendDate);
 
 		if (dataHouseId == "")
 			break;
@@ -998,11 +997,6 @@ int main()
 
 	cout << "\n vector houses \n";
 	showAllHouseInfo(houses);
-
-
-
-
-
 
 	return 0;
 }
