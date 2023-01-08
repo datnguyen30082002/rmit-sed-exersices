@@ -916,9 +916,9 @@ int main()
 		userImport.push_back(dataUser);
 	}
 
+	myFile.close();
+
 	showUsersInfo(userImport, true);
-
-
 	cout << "\n vector users \n";
 	showUsersInfo(users, true);
 
@@ -940,7 +940,7 @@ int main()
 
 		// Read data from file
 		getline(myFile, dataHouseId, ':'); // read upto seeing ':' character
-		/*getline(myFile, dataHouseLocation, ':');
+		getline(myFile, dataHouseLocation, ':');
 		getline(myFile, dataHouseDescription, ':');
 		getline(myFile, dataHouseUsername, ':');
 		getline(myFile, dataHouseAcceptOccupation, ':');
@@ -949,7 +949,7 @@ int main()
 		getline(myFile, dataHouseConsumingPoint, ':');
 		getline(myFile, dataHouseMinOccupierRating, ':');
 		getline(myFile, dataHouseRatingScore, ':');
-		getline(myFile, dataHouseReviewId);*/
+		getline(myFile, dataHouseReviewId);
 
 		if (dataHouseId == "")
 			break;
@@ -962,6 +962,7 @@ int main()
 		//dataHouse->showAllInfo();
 		houseImport.push_back(dataHouse);
 	}
+	myFile.close();
 	showAllHouseInfo(houseImport);
 
 	cout << "\n vector houses \n";
