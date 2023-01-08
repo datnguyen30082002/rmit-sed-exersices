@@ -2,6 +2,15 @@
 
 Review::Review() {};
 
+Review::Review(int reviewId, int reviewHouseId, string reviewer, int score, string comment)
+{
+	this->reviewId = reviewId;
+	this->reviewHouseId = reviewHouseId;
+	this->reviewer = reviewer;
+	this->score = score;
+	this->comment = comment;
+}
+
 Review::Review(int reviewId, int reviewHouseId, string reviewer, int score, string comment, RentDate reviewDate)
 {
 	this->reviewId = reviewId;

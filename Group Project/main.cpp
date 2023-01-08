@@ -948,7 +948,9 @@ int main()
 	}
 
 	/* Reload data from the file */
-	string dataHouseId, dataHouseLocation, dataHouseDescription, dataHouseUsername, dataHouseAcceptOccupation, dataHouseStatus, dataHouseRentStatus, dataHouseConsumingPoint, dataHouseMinOccupierRating, dataHouseRatingScore, dataHouseReviewId, dataHouseRequestList, dataHouseRentDate;
+	string dataHouseId, dataHouseLocation, dataHouseDescription, dataHouseUsername, dataHouseAcceptOccupation,// 
+		dataHouseStatus, dataHouseRentStatus, dataHouseConsumingPoint, dataHouseMinOccupierRating, //
+		dataHouseRatingScore, dataHouseReviewId, dataHouseRequestList, dataHouseRentDate;
 
 	vector<House*> houseImport = {};
 
@@ -983,7 +985,7 @@ int main()
 		dataHouse->setHouseRatingScore(stoi(dataHouseRatingScore));
 		dataHouse->setHouseReviewId(stoi(dataHouseReviewId));
 
-		// Extract occupier's name from request list and store in vector
+		// Extract occupier's name from request list and set back to object
 		vector<string> houseRequestList = split(dataHouseRequestList, ', ');
 
 		for (int i = 0; i < houseRequestList.size(); i++) {
@@ -992,6 +994,7 @@ int main()
 
 		dataHouse->setRequestOccupation(houseRequestList);
 
+		// Extract day, month, year and store back to object
 		if (!dataHouseRentDate.find("N/A")) {
 			vector<string> houseRentDate = split(dataHouseRentDate, '/');
 			RentDate* dataHouseRentDate = new (std::nothrow) RentDate();
@@ -1011,6 +1014,75 @@ int main()
 
 	cout << "\n vector houses \n";
 	showAllHouseInfo(houses);
+
+	// Reload review data
+	myReviewFile.open("review.dat", std::ios::in);
+
+	if (!myReviewFile.is_open()) {
+		cout << "Fail to open file \n";
+	}
+
+	/* Reload data from the file */
+	string dataReviewId, dataReviewHouseId, dataReviewer, dataReviewScore, //
+		dataReviewComment, dataReviewDate, dataReviewHouseOwner, dataReviewOwnerScore, //
+		dataReviewOwnerComment, dataReviewOwnerReviewDate, dataReviewOwnerWriterReview;
+	vector<Review*> reviewImport = {};
+
+	while (!myReviewFile.eof()) {
+
+		dataReviewId = "", dataReviewHouseId = "", dataReviewer = "", dataReviewScore = "", dataReviewComment = "";
+		dataReviewDate = "", dataReviewHouseOwner = "", dataReviewOwnerScore = "", dataReviewOwnerComment = "";
+		dataReviewOwnerReviewDate = "", dataReviewOwnerWriterReview = "";
+
+		// Read data from file
+		getline(myReviewFile, dataReviewId, ':'); // read until seeing ':' character
+		getline(myReviewFile, dataReviewHouseId, ':');
+		getline(myReviewFile, dataReviewer, ':');
+		getline(myReviewFile, dataReviewScore, ':');
+		getline(myReviewFile, dataReviewComment, ':');
+		getline(myReviewFile, dataReviewDate, ':');
+		getline(myReviewFile, dataReviewHouseOwner, ':');
+		getline(myReviewFile, dataReviewOwnerScore, ':');
+		getline(myReviewFile, dataReviewOwnerComment, ':');
+		getline(myReviewFile, dataReviewOwnerReviewDate, ':');
+		getline(myReviewFile, dataReviewOwnerWriterReview);
+		
+		if (dataReviewId == "")
+			break;
+
+		Review* dataReview = new (std::nothrow) Review(stoi(dataReviewId), stoi(dataReviewHouseId), dataReviewer, stoi(dataReviewScore), dataReviewComment);
+		dataReview->setHouseOwner(dataReviewHouseOwner);
+		dataReview->setOwnerScore(stoi(dataReviewOwnerScore));
+		dataReview->setOwnerComment(dataReviewOwnerComment);
+		dataReview->setOwnerWriteReview(stoi(dataReviewOwnerWriterReview));
+
+		// Extract day, month, year and store back to object
+		if (!dataReviewDate.find("N/A")) {
+			vector<string> reviewDate = split(dataReviewDate, '/');
+			RentDate* dataReviewDate = new (std::nothrow) RentDate();
+			dataReviewDate->setDay(stoi(reviewDate[0]));
+			dataReviewDate->setMonth(stoi(reviewDate[1]));
+			dataReviewDate->setYear(stoi(reviewDate[2]));
+
+			dataReview->setReviewDate(dataReviewDate);
+		}
+
+		if (!dataReviewOwnerReviewDate.find("N/A")) {
+			vector<string> ownerReviewDate = split(dataReviewOwnerReviewDate, '/');
+			RentDate* dataOwnerReviewDate = new (std::nothrow) RentDate();
+			dataOwnerReviewDate->setDay(stoi(ownerReviewDate[0]));
+			dataOwnerReviewDate->setMonth(stoi(ownerReviewDate[1]));
+			dataOwnerReviewDate->setYear(stoi(ownerReviewDate[2]));
+
+			dataReview->setOwnerReviewDate(dataOwnerReviewDate);
+		}
+
+		reviewImport.push_back(dataReview);
+	}
+
+	myReviewFile.close();
+
+	// For testing
 
 	return 0;
 }

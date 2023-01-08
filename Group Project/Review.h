@@ -20,6 +20,8 @@ private:
 public:
     Review();
 
+    Review(int reviewId, int reviewHouseId, string reviewer, int score, string comment);
+
     Review(int reviewId, int reviewHouseId, string reviewer, int score, string comment, RentDate reviewDate);
 
     int getReviewId();
