@@ -73,6 +73,20 @@ std::string join(std::vector<std::string> const& strings, std::string delim)
 	return ss.str();
 }
 
+vector<string> split(string str, char delimiter)
+{
+	// Using str in a string stream
+	stringstream ss(str);
+	vector<string> res;
+	string token;
+	while (getline(ss, token, delimiter)) 
+	{
+		res.push_back(token);
+	}
+
+	return res;
+}
+
 int main()
 {
 	// Initialize default data
@@ -896,9 +910,9 @@ int main()
 	while (!myFile.eof()) {
 
 		dataUsername = "", dataPassword = "", dataFullname = "", dataPhoneNumber = "", dataCreditPoint = "", dataRole = "", dataUserHouseId = "", dataRatingScore = "";
-		
+
 		//Read data from file
-		getline(myFile, dataUsername, ':'); //read name until seeing ':' character
+		getline(myFile, dataUsername, ':'); //read until seeing ':' character
 		getline(myFile, dataPassword, ':');
 		getline(myFile, dataFullname, ':');
 		getline(myFile, dataPhoneNumber, ':');
@@ -917,8 +931,10 @@ int main()
 	}
 
 	myFile.close();
-
+	// For testing
 	showUsersInfo(userImport, true);
+
+
 	cout << "\n vector users \n";
 	showUsersInfo(users, true);
 
@@ -930,16 +946,18 @@ int main()
 	}
 
 	/* Reload data from the file */
-	string dataHouseId, dataHouseLocation, dataHouseDescription, dataHouseUsername, dataHouseAcceptOccupation, dataHouseStatus, dataHouseRentStatus, dataHouseConsumingPoint, dataHouseMinOccupierRating, dataHouseRatingScore, dataHouseReviewId;
+	string dataHouseId, dataHouseLocation, dataHouseDescription, dataHouseUsername, dataHouseAcceptOccupation, dataHouseStatus, dataHouseRentStatus, dataHouseConsumingPoint, dataHouseMinOccupierRating, dataHouseRatingScore, dataHouseReviewId, dataHouseRequestList;
 
 	vector<House*> houseImport = {};
 
 	while (!myFile.eof()) {
 
-		dataHouseId = "", dataHouseLocation = "", dataHouseDescription = "", dataHouseUsername = "", dataHouseAcceptOccupation = "", dataHouseStatus = "", dataHouseRentStatus = "", dataHouseConsumingPoint = "", dataHouseMinOccupierRating = "", dataHouseRatingScore = "", dataHouseReviewId = "";
+		dataHouseId = "", dataHouseLocation = "", dataHouseDescription = "", dataHouseUsername = "", dataHouseAcceptOccupation = "";
+		dataHouseStatus = "", dataHouseRentStatus = "", dataHouseConsumingPoint = "", dataHouseMinOccupierRating = "", dataHouseRatingScore = "";
+		dataHouseReviewId = "", dataHouseRequestList = "";
 
 		// Read data from file
-		getline(myFile, dataHouseId, ':'); // read upto seeing ':' character
+		getline(myFile, dataHouseId, ':'); // read until seeing ':' character
 		getline(myFile, dataHouseLocation, ':');
 		getline(myFile, dataHouseDescription, ':');
 		getline(myFile, dataHouseUsername, ':');
@@ -949,7 +967,10 @@ int main()
 		getline(myFile, dataHouseConsumingPoint, ':');
 		getline(myFile, dataHouseMinOccupierRating, ':');
 		getline(myFile, dataHouseRatingScore, ':');
-		getline(myFile, dataHouseReviewId);
+		getline(myFile, dataHouseReviewId, ':');
+		getline(myFile, dataHouseRequestList);
+	
+
 
 		if (dataHouseId == "")
 			break;
@@ -958,15 +979,26 @@ int main()
 		dataHouse->setStatus(stoi(dataHouseStatus));
 		dataHouse->setUsername(dataHouseUsername);
 		dataHouse->setRentStatus(stoi(dataHouseRentStatus));
-	
-		//dataHouse->showAllInfo();
+		dataHouse->setHouseRatingScore(stoi(dataHouseRatingScore));
+		dataHouse->setHouseReviewId(stoi(dataHouseReviewId));
+
+		// delimiter is ", "
+		vector<string> res = split(dataHouseRequestList, ', ');
+
+		for (int i = 0; i < res.size(); i++) {
+			cout << res[i] << endl;
+		}
+
 		houseImport.push_back(dataHouse);
 	}
+
 	myFile.close();
+	// For testing
 	showAllHouseInfo(houseImport);
 
 	cout << "\n vector houses \n";
 	showAllHouseInfo(houses);
+
 
 
 
