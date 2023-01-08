@@ -79,7 +79,7 @@ vector<string> split(string str, char delimiter)
 	stringstream ss(str);
 	vector<string> res;
 	string token;
-	while (getline(ss, token, delimiter)) 
+	while (getline(ss, token, delimiter))
 	{
 		res.push_back(token);
 	}
@@ -946,7 +946,7 @@ int main()
 	}
 
 	/* Reload data from the file */
-	string dataHouseId, dataHouseLocation, dataHouseDescription, dataHouseUsername, dataHouseAcceptOccupation, dataHouseStatus, dataHouseRentStatus, dataHouseConsumingPoint, dataHouseMinOccupierRating, dataHouseRatingScore, dataHouseReviewId, dataHouseRequestList, strRendDate;
+	string dataHouseId, dataHouseLocation, dataHouseDescription, dataHouseUsername, dataHouseAcceptOccupation, dataHouseStatus, dataHouseRentStatus, dataHouseConsumingPoint, dataHouseMinOccupierRating, dataHouseRatingScore, dataHouseReviewId, dataHouseRequestList, dataHouseRentDate;
 
 	vector<House*> houseImport = {};
 
@@ -954,7 +954,7 @@ int main()
 
 		dataHouseId = "", dataHouseLocation = "", dataHouseDescription = "", dataHouseUsername = "", dataHouseAcceptOccupation = "";
 		dataHouseStatus = "", dataHouseRentStatus = "", dataHouseConsumingPoint = "", dataHouseMinOccupierRating = "", dataHouseRatingScore = "";
-		dataHouseReviewId = "", dataHouseRequestList = "", strRendDate = "";
+		dataHouseReviewId = "", dataHouseRequestList = "", dataHouseRentDate = "";
 
 		// Read data from file
 		getline(myFile, dataHouseId, ':'); // read until seeing ':' character
@@ -969,7 +969,7 @@ int main()
 		getline(myFile, dataHouseRatingScore, ':');
 		getline(myFile, dataHouseReviewId, ':');
 		getline(myFile, dataHouseRequestList, ':');
-		getline(myFile, strRendDate);
+		getline(myFile, dataHouseRentDate);
 
 		if (dataHouseId == "")
 			break;
@@ -981,13 +981,28 @@ int main()
 		dataHouse->setHouseRatingScore(stoi(dataHouseRatingScore));
 		dataHouse->setHouseReviewId(stoi(dataHouseReviewId));
 
-		// delimiter is ", "
-		vector<string> res = split(dataHouseRequestList, ', ');
+		// Extract occupier's name from request list and store in vector
+		vector<string> houseRequestList = split(dataHouseRequestList, ', ');
 
-		for (int i = 0; i < res.size(); i++) {
-			cout << res[i] << endl;
+		for (int i = 0; i < houseRequestList.size(); i++) {
+			cout << houseRequestList[i] << endl;
 		}
 
+		dataHouse->setRequestOccupation(houseRequestList);
+
+		vector<string> houseRentDate = split(dataHouseRentDate, '/');
+
+		for (int i = 0; i < houseRentDate.size(); i++)
+		{
+			cout << houseRentDate[i] << endl;
+
+			RentDate* dataHouseRentDate = new (std::nothrow) RentDate();
+			dataHouseRentDate->setDay(stoi(houseRentDate[0]));
+			dataHouseRentDate->setMonth(stoi(houseRentDate[1]));
+			dataHouseRentDate->setYear(stoi(houseRentDate[2]));
+		}
+		
+		dataHouse->setRentDate(stoi(dataHouseRentDate));
 		houseImport.push_back(dataHouse);
 	}
 
