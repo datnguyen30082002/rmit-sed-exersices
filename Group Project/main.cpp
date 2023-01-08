@@ -138,7 +138,7 @@ int main()
 
 	// For testing
 	vector<string> requestOccupation = { "user1", "user2", "user3" };
-	house1->setRequestOccupation(requestOccupation);
+	house2->setRequestOccupation(requestOccupation);
 
 	// for testing
 	/*house2->setAcceptOccupation("user1");
@@ -841,26 +841,29 @@ int main()
 	} while (role != 0);
 
 	// Save data to files
-	fstream myFile;
+	fstream myUserFile;
+	fstream myHouseFile;
+	fstream myReviewFile;
+
 	string userFile = "user.dat";
 	string houseFile = "house.dat";
 	string reviewFile = "review.dat";
 
-	myFile.open("user.dat", std::ios::out);
-	if (!myFile) {
+	myUserFile.open("user.dat", std::ios::out);
+	if (!myUserFile) {
 		cout << "Fail to create/open file \n";
 	}
 
 	//Store user data to the user data file
 	for (auto userData : users) {
-		myFile << userData->getUsername() << " : " << userData->getPassword() << " : " << userData->getFullname() << " : " << userData->getPhoneNumber() //
+		myUserFile << userData->getUsername() << " : " << userData->getPassword() << " : " << userData->getFullname() << " : " << userData->getPhoneNumber() //
 			<< " : " << userData->getCreditPoint() << " : " << userData->getRatingScore() << " : " << userData->getRole() << " : " << userData->getUserHouse().getId() << "\n";
 	}
 
-	myFile.close();
+	myUserFile.close();
 
-	myFile.open("house.dat", std::ios::out);
-	if (!myFile) {
+	myHouseFile.open("house.dat", std::ios::out);
+	if (!myHouseFile) {
 		cout << "Fail to create/open file \n";
 	}
 
@@ -870,35 +873,34 @@ int main()
 		std::string delim = ", ";
 		std::string requestOccupationList = join(houseData->getRequestOccupation(), delim);
 
-		myFile << houseData->getId() << " : " << houseData->getLocation() << " : " << houseData->getDescription() << " : " //
+		myHouseFile << houseData->getId() << " : " << houseData->getLocation() << " : " << houseData->getDescription() << " : " //
 			<< houseData->getUsername() << " : " << houseData->getAcceptOccupation() << " : " << houseData->getStatus() << " : " << houseData->getRentStatus() << " : " //
 			<< houseData->getConsumingPoint() << " : " << houseData->getMinOccupierRating() << " : " << houseData->getHouseRatingScore() << " : " << houseData->getHouseReviewId() //
 			<< " : " << requestOccupationList << " : " << houseData->getRentDate().toString() << "\n";
 	}
 
-	myFile.close();
+	myHouseFile.close();
 
-	myFile.open("review.dat", std::ios::out);
-	if (!myFile) {
+	myReviewFile.open("review.dat", std::ios::out);
+	if (!myReviewFile) {
 		cout << "Fail to create/open file \n";
 	}
 
 	// Store review data to the review data file
 	for (auto reviewData : reviews)
 	{
-		myFile << reviewData->getReviewId() << " : " << reviewData->getReviewHouseId() << " : " << reviewData->getReviewer() << " : " //
+		myReviewFile << reviewData->getReviewId() << " : " << reviewData->getReviewHouseId() << " : " << reviewData->getReviewer() << " : " //
 			<< reviewData->getReviewScore() << " : " << reviewData->getReviewComment() << " : " << reviewData->getReviewDate().toString() << " : " //
 			<< reviewData->getHouseOwner() << " : " << reviewData->getOwnerScore() << " : " << reviewData->getOwnerComment() << " : " << reviewData->getOwnerReviewDate().toString() //
 			<< " : " << reviewData->getOwnerWriteReview() << "\n";
 	}
-
-	myFile.close();
+	myReviewFile.close();
 
 	/* Reload data */
 	// Reload user data
-	myFile.open("user.dat", std::ios::in);
+	myUserFile.open("user.dat", std::ios::in);
 
-	if (!myFile.is_open()) {
+	if (!myUserFile.is_open()) {
 		cout << "Fail to open file \n";
 	}
 
@@ -907,19 +909,19 @@ int main()
 
 	vector<User*> userImport = {};
 
-	while (!myFile.eof()) {
+	while (!myUserFile.eof()) {
 
 		dataUsername = "", dataPassword = "", dataFullname = "", dataPhoneNumber = "", dataCreditPoint = "", dataRole = "", dataUserHouseId = "", dataRatingScore = "";
 
 		//Read data from file
-		getline(myFile, dataUsername, ':'); //read until seeing ':' character
-		getline(myFile, dataPassword, ':');
-		getline(myFile, dataFullname, ':');
-		getline(myFile, dataPhoneNumber, ':');
-		getline(myFile, dataCreditPoint, ':');
-		getline(myFile, dataRatingScore, ':');
-		getline(myFile, dataRole, ':');
-		getline(myFile, dataUserHouseId);
+		getline(myUserFile, dataUsername, ':'); //read until seeing ':' character
+		getline(myUserFile, dataPassword, ':');
+		getline(myUserFile, dataFullname, ':');
+		getline(myUserFile, dataPhoneNumber, ':');
+		getline(myUserFile, dataCreditPoint, ':');
+		getline(myUserFile, dataRatingScore, ':');
+		getline(myUserFile, dataRole, ':');
+		getline(myUserFile, dataUserHouseId);
 
 		if (dataUsername == "")
 			break;
@@ -930,7 +932,7 @@ int main()
 		userImport.push_back(dataUser);
 	}
 
-	myFile.close();
+	myUserFile.close();
 	// For testing
 	showUsersInfo(userImport, true);
 
@@ -939,9 +941,9 @@ int main()
 	showUsersInfo(users, true);
 
 	// Reload house data
-	myFile.open("house.dat", std::ios::in);
+	myHouseFile.open("house.dat", std::ios::in);
 
-	if (!myFile.is_open()) {
+	if (!myHouseFile.is_open()) {
 		cout << "Fail to open file \n";
 	}
 
@@ -950,26 +952,26 @@ int main()
 
 	vector<House*> houseImport = {};
 
-	while (!myFile.eof()) {
+	while (!myHouseFile.eof()) {
 
 		dataHouseId = "", dataHouseLocation = "", dataHouseDescription = "", dataHouseUsername = "", dataHouseAcceptOccupation = "";
 		dataHouseStatus = "", dataHouseRentStatus = "", dataHouseConsumingPoint = "", dataHouseMinOccupierRating = "", dataHouseRatingScore = "";
 		dataHouseReviewId = "", dataHouseRequestList = "", dataHouseRentDate = "";
 
 		// Read data from file
-		getline(myFile, dataHouseId, ':'); // read until seeing ':' character
-		getline(myFile, dataHouseLocation, ':');
-		getline(myFile, dataHouseDescription, ':');
-		getline(myFile, dataHouseUsername, ':');
-		getline(myFile, dataHouseAcceptOccupation, ':');
-		getline(myFile, dataHouseStatus, ':');
-		getline(myFile, dataHouseRentStatus, ':');
-		getline(myFile, dataHouseConsumingPoint, ':');
-		getline(myFile, dataHouseMinOccupierRating, ':');
-		getline(myFile, dataHouseRatingScore, ':');
-		getline(myFile, dataHouseReviewId, ':');
-		getline(myFile, dataHouseRequestList, ':');
-		getline(myFile, dataHouseRentDate);
+		getline(myHouseFile, dataHouseId, ':'); // read until seeing ':' character
+		getline(myHouseFile, dataHouseLocation, ':');
+		getline(myHouseFile, dataHouseDescription, ':');
+		getline(myHouseFile, dataHouseUsername, ':');
+		getline(myHouseFile, dataHouseAcceptOccupation, ':');
+		getline(myHouseFile, dataHouseStatus, ':');
+		getline(myHouseFile, dataHouseRentStatus, ':');
+		getline(myHouseFile, dataHouseConsumingPoint, ':');
+		getline(myHouseFile, dataHouseMinOccupierRating, ':');
+		getline(myHouseFile, dataHouseRatingScore, ':');
+		getline(myHouseFile, dataHouseReviewId, ':');
+		getline(myHouseFile, dataHouseRequestList, ':');
+		getline(myHouseFile, dataHouseRentDate);
 
 		if (dataHouseId == "")
 			break;
@@ -990,23 +992,20 @@ int main()
 
 		dataHouse->setRequestOccupation(houseRequestList);
 
-		vector<string> houseRentDate = split(dataHouseRentDate, '/');
-
-		for (int i = 0; i < houseRentDate.size(); i++)
-		{
-			cout << houseRentDate[i] << endl;
-
+		if (!dataHouseRentDate.find("N/A")) {
+			vector<string> houseRentDate = split(dataHouseRentDate, '/');
 			RentDate* dataHouseRentDate = new (std::nothrow) RentDate();
 			dataHouseRentDate->setDay(stoi(houseRentDate[0]));
 			dataHouseRentDate->setMonth(stoi(houseRentDate[1]));
 			dataHouseRentDate->setYear(stoi(houseRentDate[2]));
+
+			dataHouse->setRentDate(dataHouseRentDate);
 		}
-		
-		dataHouse->setRentDate(stoi(dataHouseRentDate));
+
 		houseImport.push_back(dataHouse);
 	}
 
-	myFile.close();
+	myHouseFile.close();
 	// For testing
 	showAllHouseInfo(houseImport);
 
