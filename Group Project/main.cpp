@@ -938,9 +938,9 @@ int main()
 
 		dataHouseId = "", dataHouseLocation = "", dataHouseDescription = "", dataHouseUsername = "", dataHouseAcceptOccupation = "", dataHouseStatus = "", dataHouseRentStatus = "", dataHouseConsumingPoint = "", dataHouseMinOccupierRating = "", dataHouseRatingScore = "", dataHouseReviewId = "";
 
-		//Read data from file
-		getline(myFile, dataHouseId, ':'); //read name until seeing ':' character
-		getline(myFile, dataHouseLocation, ':');
+		// Read data from file
+		getline(myFile, dataHouseId, ':'); // read upto seeing ':' character
+		/*getline(myFile, dataHouseLocation, ':');
 		getline(myFile, dataHouseDescription, ':');
 		getline(myFile, dataHouseUsername, ':');
 		getline(myFile, dataHouseAcceptOccupation, ':');
@@ -949,16 +949,24 @@ int main()
 		getline(myFile, dataHouseConsumingPoint, ':');
 		getline(myFile, dataHouseMinOccupierRating, ':');
 		getline(myFile, dataHouseRatingScore, ':');
-		getline(myFile, dataHouseReviewId);
+		getline(myFile, dataHouseReviewId);*/
 
 		if (dataHouseId == "")
 			break;
 
-		House* dataHouse = new (std::nothrow) House(dataUsername, dataPassword, dataFullname, dataPhoneNumber, std::stoi(dataCreditPoint), std::stof(dataRatingScore));
-		dataUser->setRole(stoi(dataRole));
-
-		userImport.push_back(dataUser);
+		House* dataHouse = new (std::nothrow) House(stoi(dataHouseId), dataHouseLocation, dataHouseDescription, stoi(dataHouseStatus), stoi(dataHouseConsumingPoint), stoi(dataHouseMinOccupierRating));
+		dataHouse->setStatus(stoi(dataHouseStatus));
+		dataHouse->setUsername(dataHouseUsername);
+		dataHouse->setRentStatus(stoi(dataHouseRentStatus));
+	
+		//dataHouse->showAllInfo();
+		houseImport.push_back(dataHouse);
 	}
+	showAllHouseInfo(houseImport);
+
+	cout << "\n vector houses \n";
+	showAllHouseInfo(houses);
+
 
 
 
