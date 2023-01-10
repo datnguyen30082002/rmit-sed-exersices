@@ -119,7 +119,7 @@ int User::getUserHouseId()
 
 void User::setUserHouseId(int UserHouseId)
 {
-    this->userHouseId = userHouseId;
+    this->userHouseId = UserHouseId;
 }
 
 bool User::registerMember(User user)
@@ -244,7 +244,7 @@ bool validateUsernameOfUser(vector<User *> users, string username)
     // Check username (username must have at least 5 characters)
     if (username.length() < 5)
     {
-        cout << "username must have at least 5 characters" << endl;
+        cout << "> username must have at least 5 characters!" << endl;
         check = false;
     }
 
@@ -253,7 +253,7 @@ bool validateUsernameOfUser(vector<User *> users, string username)
     {
         if (isspace(username[i]))
         {
-            cout << "The username must not have space" << endl;
+            cout << "> username must not have space!" << endl;
             check = false;
             break;
         }

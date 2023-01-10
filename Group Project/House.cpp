@@ -294,7 +294,7 @@ bool validateHouseInput(House house)
 {
 	for (int i = 0; i < defaultLocations.size(); i++)
 	{
-		// if (caseInsensitiveStringCompare(defaultLocations[i], house.getLocation()))
+		if (caseInsensitiveStringCompare(defaultLocations[i], house.getLocation()))
 		{
 			return true;
 		}
