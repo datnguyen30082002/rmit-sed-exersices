@@ -11,10 +11,12 @@ private:
 public:
     RentDate();
 
+    // Parameterized constructor
     RentDate(bool isNow);
 
     RentDate(int day, int month, int year);
 
+    // Get/Set methods
     int getDay();
 
     void setDay(int day);
@@ -29,7 +31,9 @@ public:
 
     void showDateInfo();
 
+    // Declare a House friend class
     friend class House;
 
+    // Convert number to string function
     string toString();
 };

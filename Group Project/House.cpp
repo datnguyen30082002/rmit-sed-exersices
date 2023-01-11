@@ -4,14 +4,6 @@
 
 House::House() {};
 
-House::House(int id, string location, string description, bool status)
-{
-	this->id = id;
-	this->location = location;
-	this->description = description;
-	this->status = status;
-}
-
 House::House(int id, string location, string description, bool status, int consumingPoint, int minOccupierRating)
 {
 	this->id = id;
@@ -31,18 +23,6 @@ House::House(int id, string location, string description, bool status, int consu
 	this->consumingPoint = consumingPoint;
 	this->minOccupierRating = minOccupierRating;
 	this->rentStatus = rentStatus;
-}
-
-House::House(int id, string location, string description, bool status, int consumingPoint, int minOccupierRating, bool rentStatus, RentDate rentDate)
-{
-	this->id = id;
-	this->location = location;
-	this->description = description;
-	this->status = status;
-	this->consumingPoint = consumingPoint;
-	this->minOccupierRating = minOccupierRating;
-	this->rentStatus = rentStatus;
-	this->rentDate = rentDate;
 }
 
 void House::setId(int id)

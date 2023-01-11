@@ -5,6 +5,7 @@
 #include <iomanip>
 using namespace std;
 
+// Define gloabal width variables 
 const int USER_USERNAME_WIDTH = 12;
 const int USER_FULLNAME_WIDTH = 12;
 const int USER_PHONE_NUMBER_WIDTH = 15;

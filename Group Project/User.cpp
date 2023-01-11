@@ -22,15 +22,6 @@ User::User(string username, string password, string fullname, string phoneNumber
     this->ratingScore = ratingScore;
 }
 
-// User::User(string username, string password, string fullname, string phoneNumber, House house)
-// {
-//     this->username = username;
-//     this->password = password;
-//     this->fullname = fullname;
-//     this->phoneNumber = phoneNumber;
-//     this->house = house;
-// }
-
 // Get/Set method
 string User::getUsername()
 {

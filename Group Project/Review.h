@@ -20,10 +20,12 @@ private:
 public:
     Review();
 
+    // Parameterized constructor
     Review(int reviewId, int reviewHouseId, string reviewer, int score, string comment);
 
     Review(int reviewId, int reviewHouseId, string reviewer, int score, string comment, RentDate reviewDate);
 
+    // Get/Set methods
     int getReviewId();
 
     void setReviewId(int reviewId);
@@ -73,8 +75,11 @@ public:
     void showOwnerReview();
 };
 
+// Show all review header function
 void showAllReviewHeader();
 
+// Show all occupiers' review function
 void showAllOccupierReviewInfo(vector<Review*> reviews);
 
+// Show all house owners' review function
 void showAllOwnerReviewInfo(vector<Review*> reviews);

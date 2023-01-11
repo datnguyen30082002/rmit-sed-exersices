@@ -22,14 +22,13 @@ private:
 public:
     House();
 
-    House(int id, string location, string description, bool status);
-
+    // Parameterized constructor
     House(int id, string location, string description, bool status, int consumingPoint, int minOccupierRating);
 
     House(int id, string location, string description, bool status, int consumingPoint, int minOccupierRating, bool rentStatus);
 
-    House(int id, string location, string description, bool status, int consumingPoint, int minOccupierRating, bool rentStatus, RentDate rentDate);
 
+    // Get/Set methods
     void setId(int id);
 
     int getId();
@@ -90,17 +89,23 @@ public:
 
     void showAllRequestOccupation();
 
+    // Declare a review friend class
     friend class Review;
 };
 
+// Show basic house header function
 void showBasicHouseHeader();
 
+// Show all header function
 void showAllHouseHeader();
 
+// Show basic house info function
 void showBasicHouseInfo(vector<House *> houses);
 
+// Show all house info function
 void showAllHouseInfo(vector<House *> houses);
 
+// Show available house info function
 void showAvailableHouseInfo(vector<House *> houses);
 
 // Check house location function

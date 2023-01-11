@@ -23,8 +23,6 @@ public:
 
 	User(string username, string password, string fullname, string phoneNumber, int creditPoint, float ratingScore);
 
-	//User(string username, string password, string fullname, string phoneNumber, House house);
-
 	// Get/Set method
 	string getUsername();
 
@@ -71,10 +69,13 @@ public:
 	friend class Review;
 };
 
+// Show header function
 void showUserHeader();
 
+// Show header with house function
 void showUserHeaderIncludeHouse();
 
+// Compare 2 strings function
 bool caseInsensitiveStringCompare(const string &str1, const string &str2);
 
 // Show info function
