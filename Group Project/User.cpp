@@ -113,11 +113,6 @@ void User::setUserHouseId(int UserHouseId)
     this->userHouseId = UserHouseId;
 }
 
-bool User::registerMember(User user)
-{
-    return true;
-}
-
 void User::showInfo()
 {
     cout.width(USER_USERNAME_WIDTH);

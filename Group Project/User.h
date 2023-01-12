@@ -60,8 +60,6 @@ public:
 
 	void setUserHouseId(int UserHouseId);
 
-	bool registerMember(User user);
-
 	void showInfo();
 
 	void showInfoIncludeHouse();
@@ -81,6 +79,7 @@ bool caseInsensitiveStringCompare(const string &str1, const string &str2);
 // Show info function
 void showUsersInfo(vector<User *> users, bool includeHouse);
 
+// Check if the username is valid or not
 bool validateUsernameOfUser(vector<User *> users, string username);
 
 // Check password function
